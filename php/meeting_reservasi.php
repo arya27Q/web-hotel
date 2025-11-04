@@ -7,17 +7,36 @@
     <title>Luxury Hotel</title>
 
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link rel="stylesheet" href="/css/meeting_reservasi.css" />
+    <link rel="stylesheet" href="../css/meeting_reservasi.css" />
+     <script src="../js/user-section.js"></script>
+    <script src="../js/reservasi_meeting_room.js"></script>
+
+     <style>
+        .background {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.356), rgba(0, 0, 0, 0.4)),
+  url('../img/re.png');
+  background-blend-mode: darken;
+
+}
+      </style>
   </head>
   <body>
     <header>
-      <img src="/img/logo.png" alt="Luxury Hotel" />
+      <img src="../img/logo.png" alt="Luxury Hotel" />
       <nav>
-        <a href="home.php">Home</a>
-        <a href="room.php">Room</a>
-        <a href="meeting.php">Meeting</a>
-        <a href="facilities.html">Facilities</a>
-        <a href="about.html">About us</a>
+      <a href="home.php">Home</a>
+      <a href="reservasi_hotel.php">Room</a>
+      <a href="meeting_reservasi.php">Meeting</a>
+      <a href="facilities.php">Facilities</a>
+      <a href="about.php">About us</a>
       </nav>
     <div class="user-menu">
   <a class="a" href="#" id="userIcon">
@@ -93,7 +112,7 @@
 
       <div class="booking-list">
         <div class="room-card">
-          <img src="/img/ball room.png" alt="grand ballroom" />
+          <img src="../img/ball room.png" alt="grand ballroom" />
           <h3>Grand Ballroom</h3>
           <p>Rp.2.000.000,00</p>
           <div class="options">
@@ -102,7 +121,7 @@
         </div>
 
         <div class="room-card">
-          <img src="/img/arjuna ballroom.png" alt="arjuna ballroom" />
+          <img src="../img/arjuna ballroom.png" alt="arjuna ballroom" />
           <h3>Arjuna Ballroom</h3>
           <p>Rp.2.500.000,00</p>
           <div class="options">
@@ -111,7 +130,7 @@
         </div>
 
         <div class="room-card">
-          <img src="/img/nakula ballroom.png" alt="nakula ballroom" />
+          <img src="../img/nakula ballroom.png" alt="nakula ballroom" />
           <h3>Nakula Ballroom</h3>
           <p>Rp.3.350.000,00</p>
           <div class="options">
@@ -121,7 +140,7 @@
 
         
       <div class="room-card">
-          <img src="/img/bima ball room.png" alt="bima ballroom" />
+          <img src="../img/bima ball room.png" alt="bima ballroom" />
           <h3>Bima Ballroom</h3>
           <p>Rp.5.000.000,00</p>
           <div class="options">
@@ -158,7 +177,5 @@
         </div>
       </div>
     </footer>
-     <script src="/js/user-section.js"></script>
-    <script src="/js/reservasi_meeting_room.js"></script>
   </body>
 </html>

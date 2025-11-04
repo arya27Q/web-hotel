@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/css/forgot_pw.css">
+    <link rel="stylesheet" href="../css/forgot_pw.css">
 </head>
 <body>
     <main class="login-container">
     <section class="login-box">
       <header>
-        <img src="/img/logo.png" alt="Luxury Hotel Logo" class="logo">
+        <img src="../img/logo.png" alt="Luxury Hotel Logo" class="logo">
       </header>
 
       <form>
@@ -22,7 +22,7 @@
 
       <footer>
         <p class="create">
-          <a href="login.html">Back to Login</a>
+          <a href="login.php">Back to Login</a>
         </p>
       </footer>
     </section>

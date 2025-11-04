@@ -6,17 +6,17 @@
   <title>Special Offers - Luxury Hotel</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/spesial_offer.css">
+  <link rel="stylesheet" href="../css/spesial_offer.css">
 </head>
 
   <header>
-    <img src="/img/logo.png" alt="Luxury Hotel">
+    <img src="../img/logo.png" alt="Luxury Hotel">
     <nav>
-      <a href="home.html">Home</a>
-      <a href="room.html">Room</a>
-      <a href="meeting.html">Meeting</a>
-      <a href="facilities.html">Facilities</a>
-      <a href="about.html">About us</a>
+       <a href="home.php">Home</a>
+      <a href="reservasi_hotel.php">Room</a>
+      <a href="meeting_reservasi.php">Meeting</a>
+      <a href="facilities.php">Facilities</a>
+      <a href="about.php">About us</a>
     </nav>
   <div class="user-menu">
   <a class="a" href="#" id="userIcon">
@@ -39,21 +39,21 @@
 
 <div class="offers">
   <div class="offer-card easy">
-    <img src="/img/sale.avif" alt="Daily Deals">
+    <img src="../img/sale.avif" alt="Daily Deals">
     <h2>✨ Daily Deals</h2>
     <p>Save up to <b>30%</b> on weekday bookings.</p>
     <a href="reservation.html" class="btn">Book Now</a>
   </div>
 
   <div class="offer-card easy">
-    <img src="/img/breakfastFamily.png" alt="Breakfast Package">
+    <img src="../img/breakfastFamily.png" alt="Breakfast Package">
     <h2>🥞 Breakfast free</h2>
     <p>Free breakfast for <b>2 guests</b> every morning.</p>
     <a href="reservation.html" class="btn">Book Now</a>
   </div>
 
   <div class="offer-card elite">
-    <img src="/img/elit.avif" alt="Member Specials">
+    <img src="../img/elit.avif" alt="Member Specials">
     <h2>👑 vip member</h2>
     <p>Exclusive <b>member-only perks</b> & discounts.</p>
     <a href="reservation.html" class="btn">Book Now</a>
@@ -81,7 +81,7 @@
     </div>
   </div>
 </footer>
- <script src="/js/spesial_offer.js"></script>
- <script src="/js/user-section.js"></script>
+ <script src="../js/spesial_offer.js"></script>
+ <script src="../js/user-section.js"></script>
 </body>
 </html>

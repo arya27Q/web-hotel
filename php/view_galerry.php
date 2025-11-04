@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-   <link rel="stylesheet" href="/css/gallery.css">
+   <link rel="stylesheet" href="../css/gallery.css">
 </head>
 <body id="top">
   <header>
     <img src="/img/logo.png" alt="Luxury Hotel">
     <nav>
-      <a href="home.html">Home</a>
-      <a href="room.html">Room</a>
-      <a href="meeting.html">Meeting</a>
-      <a href="facilities.html">Facilities</a>
-      <a href="about.html">About us</a>
+      <a href="home.php">Home</a>
+      <a href="reservasi_hotel.php">Room</a>
+      <a href="meeting_reservasi.php">Meeting</a>
+      <a href="facilities.php">Facilities</a>
+      <a href="about.php">About us</a>
     </nav>
     <div class="user-menu">
   <a class="a" href="#" id="userIcon">
@@ -40,19 +40,19 @@
    <section id="gallery">
     <h2>This is our Gallery Hotel</h2>
     <div class="gallery">
-      <div><img src="/img/galery1.avif" alt="gallery1"></div>
-      <div><img src="/img/gallery2.avif" alt="gallery2"></div>
-      <div><img src="/img/gallery3.avif" alt="gallery3"></div>
-      <div><img src="/img/gallery4.avif" alt="gallery4"></div>
+      <div><img src="../img/galery1.avif" alt="gallery1"></div>
+      <div><img src="../img/gallery2.avif" alt="gallery2"></div>
+      <div><img src="../img/gallery3.avif" alt="gallery3"></div>
+      <div><img src="../img/gallery4.avif" alt="gallery4"></div>
 
-      <div><img src="/img/gallery5.avif" alt="gallery5"></div>
-      <div><img src="/img/gallery6.avif" alt="gallery6"></div>
-      <div><img src="/img/gallery7.avif" alt="gallery7"></div>
-      <div><img src="/img/gallery8.avif" alt="gallery8"></div>
+      <div><img src="../img/gallery5.avif" alt="gallery5"></div>
+      <div><img src="../img/gallery6.avif" alt="gallery6"></div>
+      <div><img src="../img/gallery7.avif" alt="gallery7"></div>
+      <div><img src="../img/gallery8.avif" alt="gallery8"></div>
 
-      <div><img src="/img/gallery9.avif" alt="gallery9"></div>
-      <div><img src="/img/swimming.png" alt="swimming"></div>
-      <div><img src="/img/swimmingpool2.png" alt="swimmingpool2"></div>
+      <div><img src="../img/gallery9.avif" alt="gallery9"></div>
+      <div><img src="../img/swimming.png" alt="swimming"></div>
+      <div><img src="../img/swimmingpool2.png" alt="swimmingpool2"></div>
     </div>
   </section>
    <footer>
@@ -74,6 +74,6 @@
     </div>
   </div>
 </footer>
- <script src="/js/user-section.js"></script>
+ <script src="../js/user-section.js"></script>
 </body>
 </html>

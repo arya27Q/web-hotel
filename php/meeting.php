@@ -6,18 +6,18 @@
   <title>Luxury Hotel</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/meeting.css">
+  <link rel="stylesheet" href="../css/meeting.css">
 </head>
 <body id="top">
  
   <header>
-    <img src="/img/logo.png" alt="Luxury Hotel">
+    <img src="../img/logo.png" alt="Luxury Hotel">
     <nav>
-      <a href="home.html">Home</a>
-      <a href="room.html" class="active">Room</a>
-      <a href="meeting.html">Meeting</a>
-      <a href="facilities.html">Facilities</a>
-      <a href="about.html">About us</a>
+       <a href="home.php">Home</a>
+      <a href="reservasi_hotel.php">Room</a>
+      <a href="meeting_reservasi.php">Meeting</a>
+      <a href="facilities.php">Facilities</a>
+      <a href="about.php">About us</a>
     </nav>
  <div class="user-menu">
   <a class="a" href="#" id="userIcon">
@@ -45,7 +45,7 @@
   <section class="hotel-rooms">
     <h2>OUR MEETING ROOMS HOTEL</h2>
     <div class="room-box">
-      <img src="/img/ball room.png" alt="Grand Ball room">
+      <img src="./img/ball room.png" alt="Grand Ball room">
       <div class="room-info">
         <div class="icons">
           <span><i class="fa-solid fa-wifi"></i> Free wifi</span>
@@ -62,7 +62,7 @@
     </div>
 
     <div class="room-box">
-      <img src="/img/arjuna ballroom.png" alt="Suite Room">
+      <img src="../img/arjuna ballroom.png" alt="Suite Room">
       <div class="room-info">
         <div class="icons">
           <span><i class="fa-solid fa-wifi"></i> Free wifi</span>
@@ -79,7 +79,7 @@
     </div>
 
     <div class="room-box">
-      <img src="/img/ball room.png" alt="Nakula ballroom">
+      <img src="../img/ball room.png" alt="Nakula ballroom">
       <div class="room-info">
         <div class="icons">
           <span><i class="fa-solid fa-wifi"></i> Free wifi</span>
@@ -96,7 +96,7 @@
     </div>
 
   <div class="room-box">
-      <img src="/img/bima ball room.png" alt="Deluxe Room">
+      <img src="./img/bima ball room.png" alt="Deluxe Room">
       <div class="room-info">
         <div class="icons">
           <span><i class="fa-solid fa-wifi"></i> Free wifi</span>
@@ -114,7 +114,7 @@
   </section>
 
   <section class="book-now">
-    <a href="meeting_reservasi.html" class="btn-book2">Book Now</a>
+    <a href="meeting_reservasi.php" class="btn-book2">Book Now</a>
   </section>
 
    <footer>
@@ -136,6 +136,6 @@
     </div>
   </div>
 </footer>
-<script src="/js/user-section.js"></script>
+<script src="../js/user-section.js"></script>
 </body>
 </html>

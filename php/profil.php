@@ -4,20 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profil Pengguna - Luxury Hotel</title>
-  <link rel="stylesheet" href="/css/profil.css">
+  <link rel="stylesheet" href="../css/profil.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
 <body>
 
   <header>
-    <img src="/img/logo.png" alt="Luxury Hotel">
+    <img src="../img/logo.png" alt="Luxury Hotel">
     <nav>
-      <a href="home.html">Home</a>
-      <a href="room.html">Room</a>
-      <a href="meeting.html">Meeting</a>
-      <a href="facilities.html">Facilities</a>
-      <a href="about.html">About us</a>
+       <a href="home.php">Home</a>
+      <a href="reservasi_hotel.php">Room</a>
+      <a href="meeting_reservasi.php">Meeting</a>
+      <a href="facilities.php">Facilities</a>
+      <a href="about.php">About us</a>
     </nav>
   <div class="user-menu">
   <a class="a" href="#" id="userIcon">
@@ -74,8 +74,8 @@
   </div>
 </footer>
 
-  <script src="/js/profil.js"> </script>
-  <script src="/js/user-section.js"></script>
+  <script src="../js/profil.js"> </script>
+  <script src="../js/user-section.js"></script>
  
 </body>
 </html>

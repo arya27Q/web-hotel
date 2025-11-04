@@ -4,13 +4,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Luxury Hotel</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/payment_meeting.css">
+  <link rel="stylesheet" href="../css/payment_meeting.css">
 </head>
 <body id="top">
 
 
   <header>
-    <img src="/img/logo.png" alt="Luxury Hotel">
+    <img src="../img/logo.png" alt="Luxury Hotel">
     <nav>
       <a href="home.html">Home</a>
       <a href="room.html">Room</a>
@@ -118,8 +118,8 @@
     </div>
   </footer>
 
-  <script src="/js/payment_reservation_Meetingroom.js"></script>
-  <script src="/js/reservasi_meeting_room.js"></script>
- <script src="/js/user-section.js"></script>
+  <script src="../js/payment_reservation_Meetingroom.js"></script>
+  <script src="../js/reservasi_meeting_room.js"></script>
+ <script src="../js/user-section.js"></script>
 </body>
 </html>

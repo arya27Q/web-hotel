@@ -7,11 +7,31 @@
     <title>Luxury Hotel</title>
 
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link rel="stylesheet" href="/css/reservasi_room.css" />
+    <link rel="stylesheet" href="../css/reservasi_room.css" />
+     <script src="../js/reservation_room.js"></script>
+    <script src="../js/user-section.js"></script>
+
+ <style>
+        .background {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.356), rgba(0, 0, 0, 0.4)),
+  url('../img/re.png');
+  background-blend-mode: darken;
+
+}
+      </style>
+  
   </head>
   <body>
     <header>
-      <img src="/img/logo.png" alt="Luxury Hotel" />
+      <img src="../img/logo.png" alt="Luxury Hotel" />
       <nav>
         <a href="home.php">Home</a>
         <a href="reservasi_hotel.php">Room</a>
@@ -28,6 +48,7 @@
     </header>
 
     <section class="background">
+
     <h1>RESERVATION ROOM</h1>
     </section>
     <section class="why">
@@ -91,7 +112,7 @@
 
       <div class="booking-list">
         <div class="room-card">
-          <img src="/img/standartroom.png" alt="Standard Room" />
+          <img src="../img/standartroom.png" alt="Standard Room" />
           <h3>Standard Room</h3>
           <p>Rp.250.000,00</p>
           <div class="options">
@@ -100,7 +121,7 @@
         </div>
 
         <div class="room-card">
-          <img src="/img/Suite.png" alt="Suite Room" />
+          <img src="../img/Suite.png" alt="Suite Room" />
           <h3>Suite Room</h3>
           <p>Rp.750.000,00</p>
           <div class="options">
@@ -109,7 +130,7 @@
         </div>
 
         <div class="room-card">
-          <img src="/img/room.png" alt="Deluxe Room" />
+          <img src="../img/room.png" alt="Deluxe Room" />
           <h3>Deluxe Room</h3>
           <p>Rp.550.000,00</p>
           <div class="options">
@@ -148,8 +169,5 @@
         </div>
       </div>
     </footer>
-
-    <script src="/js/reservation_room.js"></script>
-    <script src="/js/user-section.js"></script>
   </body>
 </html>

@@ -11,13 +11,13 @@
 <body id="top">
  
   <header>
-    <img src="/img/logo.png" alt="Luxury Hotel">
+    <img src="../img/logo.png" alt="Luxury Hotel">
     <nav>
       <a href="home.php">Home</a>
-      <a href="room.php" class="active">Room</a>
-      <a href="meeting.php">Meeting</a>
-      <a href="facilities.html">Facilities</a>
-      <a href="about.html">About us</a>
+      <a href="reservasi_hotel.php">Room</a>
+      <a href="meeting_reservasi.php">Meeting</a>
+      <a href="facilities.php">Facilities</a>
+      <a href="about.php">About us</a>
     </nav>
   <div class="user-menu">
   <a class="a" href="#" id="userIcon">
@@ -49,7 +49,7 @@
   <section class="hotel-rooms">
     <h2>OUR  ROOMS HOTEL</h2>
     <div class="room-box">
-      <img src="/img/standartroom.png" alt="Standard Room">
+      <img src="../img/standartroom.png" alt="Standard Room">
       <div class="room-info">
         <div class="icons">
           <span><i class="fa-solid fa-wifi"></i> Free wifi</span>
@@ -69,7 +69,7 @@
     </div>
 
     <div class="room-box">
-      <img src="/img/room.png" alt="Suite Room">
+      <img src="../img/room.png" alt="Suite Room">
       <div class="room-info">
         <div class="icons">
           <span><i class="fa-solid fa-wifi"></i> Free wifi</span>
@@ -89,7 +89,7 @@
     </div>
 
     <div class="room-box">
-      <img src="/img/suite.png" alt="Deluxe Room">
+      <img src="../img/suite.png" alt="Deluxe Room">
       <div class="room-info">
         <div class="icons">
           <span><i class="fa-solid fa-wifi"></i> Free wifi</span>

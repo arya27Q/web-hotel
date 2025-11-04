@@ -46,21 +46,7 @@ nav a:hover {
 }
 
 
-.background-container {
-  background: url('hero.jpg') center/cover no-repeat;
-  height: 60vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-  padding: 20px;
-  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-  url('/img/facilites.png');
-  background-blend-mode: darken;
-  animation: fadeIn 1.2s ease forwards;
-}
+
 
 .background-container h1 {
   font-size: 7rem;

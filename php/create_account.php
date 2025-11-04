@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luxury Hotel - Login</title>
-    <link rel="stylesheet" href="/css/create_account.css">
+    <link rel="stylesheet" href="../css/create_account.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
     <main class="register-container">
         <section class="register-box">
             <header>
-                <img src="/img/logo.png" alt="Luxury Hotel Logo" class="logo">
+                <img src="../img/logo.png" alt="Luxury Hotel Logo" class="logo">
             </header>
 
             <section class="social-login">
@@ -35,12 +35,11 @@
                     <input type="password" placeholder="password" required>
                 </section>
                 <section class="options">
-                    <a href="login.html">Already have account?</a>
+                    <a href="login.php">Already have account?</a>
                 </section>
                 <button type="submit" class="login-btn">CREATE ACCOUNT</button>
             </form>
         </section>
     </main>
-    
 </body>
 </html>

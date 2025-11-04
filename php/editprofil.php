@@ -6,18 +6,18 @@
   <title>Luxury Hotel - Profile</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/editprofil.css">
+  <link rel="stylesheet" href="../css/editprofil.css">
 </head>
 <body id="top">
 
   <header>
-    <img src="/img/logo.png" alt="Luxury Hotel Logo">
+    <img src="../img/logo.png" alt="Luxury Hotel Logo">
     <nav>
-      <a href="home.html">Home</a>
-      <a href="room.html">Room</a>
-      <a href="meeting.html">Meeting</a>
-      <a href="facilities.html">Facilities</a>
-      <a href="about.html">About us</a>
+      <a href="home.php">Home</a>
+      <a href="reservasi_hotel.php">Room</a>
+      <a href="meeting_reservasi.php">Meeting</a>
+      <a href="facilities.php">Facilities</a>
+      <a href="about.php">About us</a>
     </nav>
     <div class="user-menu">
   <a class="a" href="#" id="userIcon">
@@ -72,7 +72,7 @@
       </div>
     </div>
   </footer>
-  <script src="/js/user-section.js"></script>
+  <script src="../js/user-section.js"></script>
  
 </body>
 </html>

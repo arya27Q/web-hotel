@@ -7,21 +7,19 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
  <link rel="stylesheet" href="../css/home.css">
-<script src="../js/home_learnmore.js"></script>
-<script src="../js/home_contactUs.js"></script>
-<script src="../js/user-section.js"></script>
+
 
 </head>
 <body id="top">
 
   <header>
-    <img src="/img/logo.png" alt="Luxury Hotel">
+    <img src="../img/logo.png" alt="Luxury Hotel">
     <nav>
       <a href="home.php">Home</a>
       <a href="reservasi_hotel.php">Room</a>
       <a href="meeting_reservasi.php">Meeting</a>
-      <a href="facilities.html">Facilities</a>
-      <a href="about.html">About us</a>
+      <a href="facilities.php">Facilities</a>
+      <a href="about.php">About us</a>
     </nav>
   <div class="user-menu">
   <a class="a" href="#" id="userIcon">
@@ -103,7 +101,7 @@
         </ul>
       </div>
       <div class="promo-image">
-        <img src="/img/promo.png" alt="Luxury Hotel Promo">
+        <img src="../img/promo.png" alt="Luxury Hotel Promo">
       </div>
     </div>
   </div>
@@ -112,9 +110,9 @@
   <section id="gallery">
     <h2>This is our Room Hotel</h2>
     <div class="gallery">
-      <div><img src="/img/suite.png" alt="Room Hotel"><p>Suite Room</p></div>
-      <div><img src="/img/room.png" alt="Beach Hotel"><p>deluxe room</p></div>
-      <div><img src="/img/standartroom.png" alt="Lobby Hotel"><p>standart room</p></div>
+      <div><img src="../img/suite.png" alt="Room Hotel"><p>Suite Room</p></div>
+      <div><img src="../img/room.png" alt="Beach Hotel"><p>deluxe room</p></div>
+      <div><img src="../img/standartroom.png" alt="Lobby Hotel"><p>standart room</p></div>
     </div>
   </section>
 
@@ -157,56 +155,56 @@
   <div class="reviews">
     <div class="card">
       <div class="user-info">
-        <img src="/img/daniel.avif" alt="Daniel">
+        <img src="../img/daniel.avif" alt="Daniel">
         <h3>Daniel ⭐⭐⭐⭐⭐</h3>
       </div>
       <p>I love this hotel, the beach view is perfect.</p>
     </div>
     <div class="card">
       <div class="user-info">
-        <img src="/img/banie.avif" alt="Banie">
+        <img src="../img/banie.avif" alt="Banie">
         <h3>Banie ⭐⭐⭐⭐⭐</h3>
       </div>
       <p>My family love more and wanna come again.</p>
     </div>
     <div class="card">
       <div class="user-info">
-        <img src="/img/nicolas.avif" alt="Nicolas">
+        <img src="../img/nicolas.avif" alt="Nicolas">
         <h3>Nicolas ⭐⭐⭐⭐⭐</h3>
       </div>
       <p>I recommend for you guys to come here so perfect</p>
     </div>
     <div class="card">
       <div class="user-info">
-        <img src="/img/jimmy.avif" alt="jimmy">
+        <img src="../img/jimmy.avif" alt="jimmy">
         <h3>jimmy ⭐⭐⭐⭐⭐</h3>
       </div>
       <p>I WANT TO COME AGAIN AND I LOVE SO MUCH THIS VIEW</p>
     </div>
     <div class="card">
       <div class="user-info">
-        <img src="/img/james.avif" alt="norman">
+        <img src="../img/james.avif" alt="norman">
         <h3>norman ⭐⭐⭐⭐⭐</h3>
       </div>
       <p>THIS IS COOL AND I LIKE THANKS</p>
     </div>
     <div class="card">
       <div class="user-info">
-        <img src="/img/james.avif" alt="james">
+        <img src="../img/james.avif" alt="james">
         <h3>james ⭐⭐⭐⭐⭐</h3>
       </div>
       <p>I LOVE THIS GYM AND THE VIEW IS SO COOL</p>
     </div>
     <div class="card">
       <div class="user-info">
-        <img src="/img/lily.avif" alt="lily">
+        <img src="../img/lily.avif" alt="lily">
         <h3>lily ⭐⭐⭐⭐⭐</h3>
       </div>
       <p>MY FAMILY LOVE MORE AND WANNA COME AGAIN</p>
     </div>
     <div class="card">
       <div class="user-info">
-        <img src="/img/bd.avif" alt="budi">
+        <img src="../img/bd.avif" alt="budi">
         <h3>dandy ⭐⭐⭐⭐⭐</h3>
       </div>
       <p>MY FAMILY REALLY ENJOY FOR THIS HOTEL THANKSS</p>
@@ -218,9 +216,9 @@
   <section id="gallery">
     <h2>This is our Gallery Hotel</h2>
     <div class="gallery">
-      <div><img src="/img/swimming.png" alt="Room Hotel"><p>swimming pool</p></div>
-      <div><img src="/img/beach.png" alt="Beach Hotel"><p>Beach Hotel</p></div>
-      <div><img src="/img/lobby.png" alt="Lobby Hotel"><p>Lobby Hotel</p></div>
+      <div><img src="../img/swimming.png" alt="Room Hotel"><p>swimming pool</p></div>
+      <div><img src="../img/beach.png" alt="Beach Hotel"><p>Beach Hotel</p></div>
+      <div><img src="../img/lobby.png" alt="Lobby Hotel"><p>Lobby Hotel</p></div>
     </div>
     <a href="view_galerry.html" class="btn-galery"><i class="fa-solid fa-images"></i> View All Gallery</a>
   </section>
@@ -244,6 +242,8 @@
     </div>
   </div>
 </footer>
-  
+  <script src="../js/home_learnmore.js"></script>
+<script src="../js/home_contactUs.js"></script>
+<script src="../js/user-section.js"></script>
 </body>
 </html>

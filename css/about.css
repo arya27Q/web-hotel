@@ -103,7 +103,6 @@ nav a:hover {
 
 
 .background {
-  background: url('hero.jpg') center/cover no-repeat;
   height: 70vh;
   display: flex;
   flex-direction: column;

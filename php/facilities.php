@@ -5,17 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-   <link rel="stylesheet" href="/css/facilites.css">
+   <link rel="stylesheet" href="../css/facilites.css">
+
+<style>
+  .background-container {
+ 
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+  url('../img/facilites.png');
+  background-blend-mode: darken;
+  animation: fadeIn 1.2s ease forwards;
+}
+</style>
+
 </head>
 <body id="top">
   <header>
-    <img src="/img/logo.png" alt="Luxury Hotel">
+    <img src="../img/logo.png" alt="Luxury Hotel">
     <nav>
-      <a href="home.html">Home</a>
-      <a href="room.html">Room</a>
-      <a href="meeting.html">Meeting</a>
-      <a href="facilities.html">Facilities</a>
-      <a href="about.html">About us</a>
+      <a href="home.php">Home</a>
+      <a href="reservasi_hotel.php">Room</a>
+      <a href="meeting_reservasi.php">Meeting</a>
+      <a href="facilities.php">Facilities</a>
+      <a href="about.php">About us</a>
     </nav>
    <div class="user-menu">
   <a class="a" href="#" id="userIcon">
@@ -39,19 +58,19 @@
    <section id="gallery">
     <h2>This is our facilities hotel</h2>
     <div class="gallery">
-      <div><img src="/img/gym.png" alt="gym Hotel"><p>gym hotel</p></div>
-      <div><img src="/img/swimming.png" alt="swimming pool Hotel"><p>swimming pool</p></div>
-      <div><img src="/img/wifi.png" alt="wifi hotel"><p>wifi hotel</p></div>
-      <div><img src="/img/spa.png" alt="spa hotel"><p>spa hotel</p></div>
+      <div><img src="../img/gym.png" alt="gym Hotel"><p>gym hotel</p></div>
+      <div><img src="../img/swimming.png" alt="swimming pool Hotel"><p>swimming pool</p></div>
+      <div><img src="../img/wifi.png" alt="wifi hotel"><p>wifi hotel</p></div>
+      <div><img src="../img/spa.png" alt="spa hotel"><p>spa hotel</p></div>
 
-      <div><img src="/img/laundry.png" alt="laundry hotel"><p>laundry hotel</p></div>
-      <div><img src="/img/beach.png" alt="swimming pool Hotel"><p>beach hotel </p></div>
-      <div><img src="/img/restaurant.png" alt="wifi hotel"><p> restaurant hotel</p></div>
-      <div><img src="/img/swimmingpool2.png" alt="swimming pool Hotel"><p>swimming pool outdoor</p></div>
+      <div><img src="../img/laundry.png" alt="laundry hotel"><p>laundry hotel</p></div>
+      <div><img src="../img/beach.png" alt="swimming pool Hotel"><p>beach hotel </p></div>
+      <div><img src="../img/restaurant.png" alt="wifi hotel"><p> restaurant hotel</p></div>
+      <div><img src="../img/swimmingpool2.png" alt="swimming pool Hotel"><p>swimming pool outdoor</p></div>
 
-      <div><img src="/img/breakfast.png" alt="gym Hotel"><p>breakfast bread</p></div>
-      <div><img src="/img/breakfastFamily.png" alt="wifi hotel"><p>breakfast family</p></div>
-      <div><img src="/img/carpark.png" alt="spa hotel"><p>car park</p></div>
+      <div><img src="../img/breakfast.png" alt="gym Hotel"><p>breakfast bread</p></div>
+      <div><img src="../img/breakfastFamily.png" alt="wifi hotel"><p>breakfast family</p></div>
+      <div><img src="../img/carpark.png" alt="spa hotel"><p>car park</p></div>
     </div>
   </section>
    <footer>
@@ -73,6 +92,6 @@
     </div>
   </div>
 </footer>
-<script src="/js/user-section.js"></script>
+<script src="../js/user-section.js"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luxury Hotel - Login</title>
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
     <main class="login-container">
         <section class="login-box">
             <header>
-                <img src="/img/logo.png" alt="Luxury Hotel Logo" class="logo">
+                <img src="../img/logo.png" alt="Luxury Hotel Logo" class="logo">
             </header>
 
             <section class="social-login">
@@ -36,11 +36,11 @@
 
             <footer>
                 <p class="create">
-                <a href="create_account.html">Create Account</a>
+                <a href="create_account.php">Create Account</a>
                 </p>
             </footer>
         </section>
     </main>
-    <script src="/js/login.js"></script>
+    <script src="../js/login.js"></script>
 </body>
 </html>

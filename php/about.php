@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Luxury Hotel</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/css/about.css">
+  <link rel="stylesheet" href="../css/about.css">
 </head>
 <body id="top">
   <header>
-    <img src="/img/logo.png" alt="Luxury Hotel">
+    <img src="../img/logo.png" alt="Luxury Hotel">
     <nav>
-      <a href="home.html">Home</a>
-      <a href="room.html">Room</a>
-      <a href="meeting.html">Meeting</a>
-      <a href="facilities.html">Facilities</a>
-      <a href="about.html">About us</a>
+      <a href="home.php">Home</a>
+      <a href="reservasi_hotel.php">Room</a>
+      <a href="meeting_reservasi.php">Meeting</a>
+      <a href="facilities.php">Facilities</a>
+      <a href="about.php">About us</a>
     </nav>
    <div class="user-menu">
   <a class="a" href="#" id="userIcon">
@@ -35,10 +35,10 @@
     <p>Welcome to Luxury Hotel, a symbol of elegance and comfort in the heart of the city. 
       Since our establishment in 2015, we have been committed to providing an unforgettable 
       stay with personalized service andworld-class facilities</p>
-      <img src="/img/melungker.png" alt="Luxury Hotel">
+      <img src="../img/melungker.png" alt="Luxury Hotel">
     <p>Each room and suite is designed with modern elegance and equipped with the latest 
       technology to ensure your comfort and privacy.</p>
-      <img src="/img/melungker.png" alt="Luxury Hotel">
+      <img src="../img/melungker.png" alt="Luxury Hotel">
       <p>Luxury Hotel also offers a gourmet restaurant, luxurious spa, infinity pool, 
           and 24-hour concierge service to cater to every guest’s need.We believe every 
           moment at our hotel is a special experience. Book your room now and indulge in true luxury.</p>
@@ -62,7 +62,7 @@
     </div>
   </div>
 </footer>
-<script src="/js/user-section.js"></script>
+<script src="../js/user-section.js"></script>
 </body>
 </html>
 
