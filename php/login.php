@@ -29,7 +29,7 @@
                     <input type="password" placeholder="password" required>
                 </section>
                 <section class="options">
-                    <a href="forgot_pw.html">Forgot Password?</a>
+                    <a href="forgot_pw.php">Forgot Password?</a>
                 </section>
                 <button type="submit" class="login-btn">LOGIN</button>
             </form>

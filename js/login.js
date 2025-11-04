@@ -51,7 +51,7 @@ form.addEventListener("submit", function (e) {
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
 
-    const redirect = sessionStorage.getItem("postLoginRedirect") || "home.html";
+    const redirect = sessionStorage.getItem("postLoginRedirect") || "home.php";
     sessionStorage.removeItem("postLoginRedirect");
 
     alert(`Selamat datang, ${currentUser.name}!`);

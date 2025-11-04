@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!currentUser.email) {
     alert("Silakan login terlebih dahulu!");
-    window.location.href = "login.html";
+    window.location.href = "login.php";
     return;
   }
 
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("currentUser");
-      window.location.href = "login.html";
+      window.location.href = "login.php";
     });
   }
 });

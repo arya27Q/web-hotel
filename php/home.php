@@ -35,7 +35,7 @@
         It’s time to enjoy and relax <span class="blue">to go vacation</span></h1>
     <p>every guest is treated like <b>family</b> a cozy <b>stay surrounded </b> by peace</p>
     <div class="hero-buttons">
-      <a href="spesial_offer.html" class="btn"><i class="fa-solid fa-gift"></i> Special Offers</a>
+      <a href="spesial_offer.php" class="btn"><i class="fa-solid fa-gift"></i> Special Offers</a>
       <a href="#reservation" class="btn"><i class="fa-solid fa-calendar-check"></i> Book Now</a>
     </div>
   </section>
@@ -125,7 +125,7 @@
       <div><i class="fa-solid fa-envelope"></i><h3>Confirm Email</h3><p>Check your email for confirmationt</p></div>
     </div>
     <div>
-      <a href="reservasi_hotel.html" class="btn"><i class="fa-solid fa-hotel"></i> Start Booking</a>
+      <a href="reservasi_hotel.php" class="btn"><i class="fa-solid fa-hotel"></i> Start Booking</a>
       <button id="contactBtn" class="btn"><i class="fa-solid fa-phone"></i> Contact Us</button>'
     </div>
       </section>
@@ -220,7 +220,7 @@
       <div><img src="../img/beach.png" alt="Beach Hotel"><p>Beach Hotel</p></div>
       <div><img src="../img/lobby.png" alt="Lobby Hotel"><p>Lobby Hotel</p></div>
     </div>
-    <a href="view_galerry.html" class="btn-galery"><i class="fa-solid fa-images"></i> View All Gallery</a>
+    <a href="view_galerry.php" class="btn-galery"><i class="fa-solid fa-images"></i> View All Gallery</a>
   </section>
 
   <footer>
@@ -243,7 +243,8 @@
   </div>
 </footer>
   <script src="../js/home_learnmore.js"></script>
+  <script src="../js/user-section.js"></script>
 <script src="../js/home_contactUs.js"></script>
-<script src="../js/user-section.js"></script>
+
 </body>
 </html>

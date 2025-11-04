@@ -9,15 +9,15 @@ document.addEventListener("DOMContentLoaded", () => {
    
     if (currentUser && currentUser.email) {
       dropdown.innerHTML = `
-        <a href="profil.html">Profile</a>
+        <a href="profil.php">Profile</a>
         <a href="#" id="logoutBtn">Logout</a>
       `;
     } 
     
     else {
       dropdown.innerHTML = `
-        <a href="login.html">Login</a>
-        <a href="create_account.html">Create Account</a>
+        <a href="login.php">Login</a>
+        <a href="create_account.php">Create Account</a>
       `;
     }
   }
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       localStorage.removeItem("currentUser");
       alert("You have been logged out!");
-      window.location.href = "home.html";
+      window.location.href = "home.php";
     }
   });
 });

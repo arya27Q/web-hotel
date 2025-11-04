@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   if (!currentUser) {
     alert("Silakan login terlebih dahulu!");
-    window.location.href = "login.html";
+    window.location.href = "login.php";
     return;
   }
 
@@ -29,6 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     localStorage.setItem("currentUser", JSON.stringify(updatedUser));
     alert("Profil berhasil diperbarui!");
-    window.location.href = "profil.html";
+    window.location.href = "profil.php";
   });
 });
