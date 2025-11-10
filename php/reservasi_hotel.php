@@ -2,6 +2,7 @@
 include 'config.php';
 session_start();
 header("Content-Type: text/html; charset=UTF-8");
+date_default_timezone_set('Asia/Jakarta');
 
 // kalau request dari JavaScript (fetch JSON)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && str_contains($_SERVER['CONTENT_TYPE'], 'application/json')) {

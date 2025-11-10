@@ -114,7 +114,7 @@
   </section>
 
   <section class="book-now">
-    <a href="reservasi_hotel.html" class="btn-book">Book Now</a>
+    <a href="reservasi_hotel.php" class="btn-book">Book Now</a>
   </section>
 
    <footer>

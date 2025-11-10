@@ -28,11 +28,11 @@
   <header>
     <img src="../img/logo.png" alt="Luxury Hotel">
     <nav>
-      <a href="home.html">Home</a>
-      <a href="room.html">Room</a>
-      <a href="meeting.html">Meeting</a>
-      <a href="facilities.html">Facilities</a>
-      <a href="about.html">About us</a>
+      <a href="home.php">Home</a>
+      <a href="room.php">Room</a>
+      <a href="meeting.php">Meeting</a>
+      <a href="facilities.php">Facilities</a>
+      <a href="about.php">About us</a>
     </nav>
    <div class="user-menu">
   <a class="a" href="#" id="userIcon">

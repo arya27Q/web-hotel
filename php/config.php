@@ -5,7 +5,7 @@ $pass = "";
 $db = "web_hotel"; 
 
 
-$conn = mysqli_connect($host, $user, $pass, $db);
+$conn = mysqli_connect($host, $user, $pass, $db, 3306);
 
 
 if (!$conn) {

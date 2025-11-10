@@ -155,7 +155,7 @@
   <h2>My Booking</h2>
   <ul id="booking-list"></ul>
   <p>Total : <span id="total-price">0</span></p>
-  <a href="payment_meeting.html" class="button2">Book Now</a>
+  <a href="payment_meeting.php" class="button2">Book Now</a>
 </div>
 </div>
 </section>
