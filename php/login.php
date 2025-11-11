@@ -1,7 +1,7 @@
 <?php
 
-session_start(); 
-require_once 'config.php'; 
+session_start();
+require_once 'config.php';
 
 $error_message = '';
 $success_message = '';
@@ -16,9 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['token'])) {
     $login_input = trim(strtolower($_POST['login_field']));
     $password = $_POST['password'];
 
-    $sql = "SELECT id_tamu, password_hash, nama_lengkap, email, metode_auth 
+    // --- PERUBAHAN DI SINI ---
+    // Kolom 'metode_auth' dan kondisi WHERE 'metode_auth' dihapus.
+    $sql = "SELECT id_tamu, password_hash, nama_lengkap, email 
             FROM Tamu 
-            WHERE (email = ? OR nama_lengkap = ?) AND metode_auth = 'email'";
+            WHERE (email = ? OR nama_lengkap = ?)";
+    // --- AKHIR PERUBAHAN ---
     
     $stmt = mysqli_prepare($conn, $sql);
 
@@ -37,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['token'])) {
                 $_SESSION['email'] = $tamu['email'];
                 $_SESSION['is_logged_in'] = true;
                 
-                header("Location: home.php"); 
+                header("Location: home.php");
                 exit();
             } else {
                 $error_message = "Email/Username atau Password salah.";
@@ -50,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['token'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

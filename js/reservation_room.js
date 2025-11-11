@@ -9,7 +9,7 @@ function calculateNights(checkinDateStr, checkoutDateStr) {
 
   if (checkout <= checkin) {
     return 1; // Minimal 1 malam
-  } // Hitung selisih dalam milidetik (milliseconds)
+  } // Hitung selih dalam milidetik (milliseconds)
 
   const diffTime = Math.abs(checkout.getTime() - checkin.getTime()); // Konversi milidetik ke hari dan bulatkan ke atas
 
@@ -32,11 +32,11 @@ function renderBookingList() {
     const li = document.createElement("li"); // Tampilkan detail durasi dan total harga
 
     li.innerHTML = `
- ${item.name} 
- (${item.checkin} &rarr; ${item.checkout}) 
- <span style="font-weight: bold;">(${totalNights} malam)</span>
- - Rp${itemTotalPrice.toLocaleString("id-ID")}
- `;
+      ${item.name} 
+      (${item.checkin} &rarr; ${item.checkout}) 
+      <span style="font-weight: bold;">(${totalNights} malam)</span>
+      - Rp${itemTotalPrice.toLocaleString("id-ID")}
+    `;
     ul.appendChild(li);
   });
 
@@ -53,8 +53,20 @@ function addBooking(name, pricePerNight) {
   if (!checkin || !checkout) {
     alert("Silakan pilih tanggal check-in dan check-out dulu!");
     return;
-  } // Hitung jumlah malam di JS untuk tampilan
+  }
 
+  // --- EDIT DITAMBAHKAN DI SINI ---
+  // Validasi agar tanggal check-out tidak sebelum check-in
+  const checkinDate = new Date(checkin);
+  const checkoutDate = new Date(checkout);
+
+  if (checkoutDate <= checkinDate) {
+    alert("Tanggal check-out harus setelah tanggal check-in!");
+    return;
+  }
+  // --- AKHIR EDIT ---
+
+  // Hitung jumlah malam di JS untuk tampilan
   const totalNights = calculateNights(checkin, checkout); // Tambah data ke array
 
   bookingList.push({

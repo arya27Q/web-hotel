@@ -1,3 +1,4 @@
+
 <?php
 include 'config.php';
 session_start();
@@ -5,7 +6,11 @@ header("Content-Type: text/html; charset=UTF-8");
 date_default_timezone_set('Asia/Jakarta');
 
 // kalau request dari JavaScript (fetch JSON)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && str_contains($_SERVER['CONTENT_TYPE'], 'application/json')) {
+// GANTI BAGIAN INI:
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && str_contains($_SERVER['CONTENT_TYPE'], 'application/json')) {
+
+// DENGAN BAGIAN INI (MENGGUNAKAN strpos):
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
     header("Content-Type: application/json");
 
     $id_tamu = $_SESSION['id_tamu'] ?? null;
@@ -26,11 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && str_contains($_SERVER['CONTENT_TYPE
     }
 
     $tanggal_reservasi = date('Y-m-d H:i:s');
+    $reservasi_berhasil = false; // Tandai apakah ada yang berhasil
 
     foreach ($data['list'] as $item) {
         $tipe_kamar = $item['name'] ?? '';
-        // HARGA YANG DITERIMA DARI JS HANYA HARGA PER MALAM
-        $harga_per_malam_dari_js = $item['price'] ?? 0; 
+        $harga_per_malam_dari_js = $item['price'] ?? 0;
         
         $checkin_str = $item['checkin'] ?? date('Y-m-d');
         $checkout_str = $item['checkout'] ?? date('Y-m-d', strtotime('+1 day'));
@@ -49,32 +54,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && str_contains($_SERVER['CONTENT_TYPE
                 $jumlah_malam = 1;
             }
         } catch (Exception $e) {
-            $jumlah_malam = 1; 
+            $jumlah_malam = 1;
         }
 
         // PENTING: Hitung TOTAL BIAYA = Harga Per Malam * Jumlah Malam
-        $total_biaya = $harga_per_malam_dari_js * $jumlah_malam; 
+        $total_biaya = $harga_per_malam_dari_js * $jumlah_malam;
         // ------------------------------------------
 
-        // Cek ID Kamar dan Lanjutkan INSERT
-        // ... (Kode untuk SELECT id_kamar) ...
-
+        
+       
+        $sql_get_kamar = "SELECT id_kamar FROM kamar WHERE tipe_kamar = ? LIMIT 1";
+        $stmt_get_kamar = $conn->prepare($sql_get_kamar);
+        
+        if ($stmt_get_kamar === false) {
+            error_log("Prepare gagal (SELECT): " . $conn->error);
+            continue; // Lanjut ke item berikutnya di loop
+        }
+        
+        $stmt_get_kamar->bind_param("s", $tipe_kamar);
+        $stmt_get_kamar->execute();
+        $result = $stmt_get_kamar->get_result(); // Ini membuat $result
+        
+        // Periksa apakah kamar ditemukan
         if ($result->num_rows > 0) {
-            // ...
+            $row = $result->fetch_assoc();
+            $id_kamar = $row['id_kamar']; // Ini membuat $id_kamar
+
+            // --- INI KODE INSERT ANDA YANG ASLI ---
             $sql_insert = "INSERT INTO reservasi_kamar 
                 (id_tamu, id_kamar, tanggal_reservasi, tanggal_check_in, tanggal_check_out, jumlah_tamu, tipe_kamar_dipesan, total_biaya, status_reservasi)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Booked')";
+            
             $stmt_insert = $conn->prepare($sql_insert);
-            // PENTING: Bind variabel $total_biaya (BUKAN $harga_per_malam_dari_js)
-            $stmt_insert->bind_param("iisssisd", $id_tamu, $id_kamar, $tanggal_reservasi, $checkin_str, $checkout_str, $jumlah_tamu, $tipe_kamar, $total_biaya);
-            $stmt_insert->execute();
-        }
-    }
+            
+            if ($stmt_insert) {
+                $stmt_insert->bind_param("iisssisd", $id_tamu, $id_kamar, $tanggal_reservasi, $checkin_str, $checkout_str, $jumlah_tamu, $tipe_kamar, $total_biaya);
+                $stmt_insert->execute();
+                $reservasi_berhasil = true; // Setidaknya satu berhasil
+            } else {
+                 error_log("Prepare gagal (INSERT): " . $conn->error);
+            }
 
-    echo json_encode(["status" => "success", "message" => "Reservasi berhasil disimpan."]);
+        } else {
+            // Jika kamar tidak ditemukan di DB, catat di log
+            error_log("Kamar tidak ditemukan di DB: " . $tipe_kamar);
+        }
+        // -----------------------------------------------------------------
+        // AKHIR BLOK PERBAIKAN
+        // -----------------------------------------------------------------
+
+    } // --- AKHIR DARI 'foreach' ---
+
+    
+    if ($reservasi_berhasil) {
+        echo json_encode(["status" => "success", "message" => "Reservasi berhasil disimpan."]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Gagal menyimpan reservasi, kamar tidak ditemukan."]);
+    }
+    
     exit; // stop di sini biar HTML nggak ikut ke kirim
-}
+} // --- AKHIR DARI 'if ($_SERVER['REQUEST_METHOD'] ...' ---
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
