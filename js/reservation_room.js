@@ -32,11 +32,11 @@ function renderBookingList() {
     const li = document.createElement("li"); // Tampilkan detail durasi dan total harga
 
     li.innerHTML = `
-            ${item.name} 
-            (${item.checkin} &rarr; ${item.checkout}) 
-            <span style="font-weight: bold;">(${totalNights} malam)</span>
-            - Rp${itemTotalPrice.toLocaleString("id-ID")}
-        `;
+ ${item.name} 
+ (${item.checkin} &rarr; ${item.checkout}) 
+ <span style="font-weight: bold;">(${totalNights} malam)</span>
+ - Rp${itemTotalPrice.toLocaleString("id-ID")}
+ `;
     ul.appendChild(li);
   });
 
