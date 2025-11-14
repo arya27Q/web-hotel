@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (mysqli_stmt_execute($stmt)) {
                 // Sukses: Redirect kembali ke halaman index.php
                 // INI ADALAH BAGIAN YANG DIUBAH!
-                header("location: index.php?update=success"); 
+                header("location: table.php?update=success"); 
                 exit();
             } else {
                 // Gagal eksekusi

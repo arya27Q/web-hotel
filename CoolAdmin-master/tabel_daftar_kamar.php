@@ -2,61 +2,45 @@
 // Impor file koneksi database
 include_once '../php/config.php';
 
-// ========================================================
-// ========= 4 KUERI BARU UNTUK WIDGET OVERVIEW ===========
-// ========================================================
+// Cek notifikasi update
+if (isset($_GET['update']) && $_GET['update'] == 'success') {
+    echo '<div class="alert alert-success" role="alert" style="margin-bottom:0;">Status kamar berhasil diperbarui!</div>';
+}
 
-// 1. Kamar Terisi (Asumsi status 'Checked-In')
-$sql_terisi = "SELECT COUNT(*) as total_terisi FROM reservasi_kamar WHERE status_reservasi = 'Checked-In'";
-$hasil_terisi = mysqli_query($conn, $sql_terisi);
-$data_terisi = mysqli_fetch_assoc($hasil_terisi);
-$total_terisi = $data_terisi['total_terisi'];
+// Query SQL untuk mengambil data dari tabel 'kamar'
+$sql = "SELECT id_kamar, nomor_kamar, tipe_kamar, kapasitas, harga_per_malam, status_kamar FROM kamar ORDER BY id_kamar ASC";
+$result = mysqli_query($conn, $sql);
 
-// 2. Reservasi Baru (Hari Ini)
-$sql_reservasi_hari_ini = "SELECT COUNT(*) as total_reservasi_hari_ini FROM reservasi_kamar WHERE DATE(tanggal_reservasi) = CURDATE()";
-$hasil_reservasi_hari_ini = mysqli_query($conn, $sql_reservasi_hari_ini);
-$data_reservasi_hari_ini = mysqli_fetch_assoc($hasil_reservasi_hari_ini);
-$total_reservasi_hari_ini = $data_reservasi_hari_ini['total_reservasi_hari_ini'];
-
-// 3. Tamu Check-In (Hari Ini)
-$sql_checkin_hari_ini = "SELECT COUNT(*) as total_checkin_hari_ini FROM reservasi_kamar WHERE status_reservasi = 'Booked' AND tanggal_check_in = CURDATE()";
-$hasil_checkin_hari_ini = mysqli_query($conn, $sql_checkin_hari_ini);
-$data_checkin_hari_ini = mysqli_fetch_assoc($hasil_checkin_hari_ini);
-$total_checkin_hari_ini = $data_checkin_hari_ini['total_checkin_hari_ini'];
-
-// 4. Pendapatan (Bulan Ini)
-$sql_pendapatan = "SELECT SUM(total_amount) as total_pendapatan_bulan_ini FROM pembayaran 
-                   WHERE status_pembayaran IN ('Paid', 'Lunas') 
-                   AND MONTH(tanggal_pembayaran) = MONTH(CURDATE())
-                   AND YEAR(tanggal_pembayaran) = YEAR(CURDATE())";
-$hasil_pendapatan = mysqli_query($conn, $sql_pendapatan);
-$data_pendapatan = mysqli_fetch_assoc($hasil_pendapatan);
-$total_pendapatan_bulan_ini = $data_pendapatan['total_pendapatan_bulan_ini'] ?? 0; // ?? 0 agar tidak null
-
-// Tutup koneksi
-mysqli_close($conn);
+if (!$result) {
+    echo "<div class='alert alert-danger'>Error Query: " . mysqli_error($conn) . "</div>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
+   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
+    <title>Daftar Kamar</title>
     <link href="css/font-face.css" rel="stylesheet" media="all">
     <link href="vendor/fontawesome-7.0.1/css/all.min.css" rel="stylesheet" media="all">
     <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="vendor/bootstrap-5.3.8.min.css" rel="stylesheet" media="all">
+    <link href="css/aos.css" rel="stylesheet" media="all">
+    <link href="vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="css/swiper-bundle-11.2.10.min.css" rel="stylesheet" media="all">
     <link href="vendor/perfect-scrollbar/perfect-scrollbar-1.5.6.css" rel="stylesheet" media="all">
     <link href="css/theme.css" rel="stylesheet" media="all">
 </head>
-
 <body>
 <div class="page-wrapper">
+    
     <header class="header-mobile d-block d-lg-none">
         <div class="header-mobile__bar">
             <div class="container-fluid">
                 <div class="header-mobile-inner">
+                    <a class="logo" href="index.php">
+                        <img src="../CoolAdmin-master/images/logo.png" alt="Luxury Hotel" style="width: 80px; height: 80px; margin-left: 1rem;"/>
+                    </a>
                     <button class="hamburger hamburger--slider" type="button">
                         <span class="hamburger-box">
                             <span class="hamburger-inner"></span>
@@ -68,11 +52,11 @@ mysqli_close($conn);
         <nav class="navbar-mobile">
             <div class="container-fluid">
                 <ul class="navbar-mobile__list list-unstyled">
-                    <li class="active">
+                    <li>
                         <a href="index.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
                     </li>
-                    <li>
-                        <a href="tabel_daftar_kamar.php"><i class="fas fa-bed"></i>Master Kamar</a>
+                    <li class="active">
+                        <a href="tabel_daftar_kamar.php"><i class="fas fa-bed"></i>Daftar Kamar</a>
                     </li>
                     <li>
                         <a href="table.php"><i class="fas fa-table"></i>Reservasi Kamar</a>
@@ -98,22 +82,25 @@ mysqli_close($conn);
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
             <a href="index.php">
-                <img src="../CoolAdmin-master/images/logo.png" alt="Luxury Hotel"  style="width: 80px; height: 80px; margin-left: 4.5rem;"/>
+                <img src="../CoolAdmin-master/images/logo.png" alt="Luxury Hotel" style="width: 80px; height: 80px; margin-left: 4.5rem;"/>
             </a>
         </div>
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
-                    <li class="active"> <a href="index.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                    <li>
+                        <a href="index.php">
+                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                    </li>
+                    <li class="active"> <a href="tabel_daftar_kamar.php"> 
+                            <i class="fas fa-bed"></i>Daftar Kamar</a>
                     </li>
                     <li>
-                        <a href="tabel_daftar_kamar.php"><i class="fas fa-bed"></i>Daftar Kamar</a>
-                    </li>
+                        <a href="table.php"> 
+                            <i class="fas fa-bed"></i>Reservasi Kamar</a> </li>
                     <li>
-                        <a href="table.php"><i class="fas fa-bed"></i>Reservasi Kamar</a>
-                    </li>
-                    <li>
-                        <a href="tabel_meeting.php"><i class="fas fa-desktop"></i>Reservasi Meeting</a>
+                        <a href="tabel_meeting.php">
+                            <i class="fas fa-desktop"></i>Reservasi Meeting</a>
                     </li>
                     <li>
                         <a href="tabel_pembayaran.php"><i class="fas fa-credit-card"></i>Pembayaran</a>
@@ -187,74 +174,59 @@ mysqli_close($conn);
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="overview-wrap">
-                                <h2 class="title-1">Overview</h2>
-                                <button class="au-btn au-btn-icon au-btn--blue">
-                                    <i class="zmdi zmdi-plus"></i>add item</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row m-t-25">
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="overview-item overview-item--c1" style="background-color: #6c5ce7;"> <div class="overview__inner">
-                                    <div class="overview-box clearfix">
-                                        <div class="icon">
-                                            <i class="fas fa-bed"></i> </div>
-                                        <div class="text">
-                                            <h2><?php echo $total_terisi; ?></h2> <span>Kamar Terisi (Malam Ini)</span> </div>
-                                    </div>
-                                    <div class="overview-chart">
-                                        <canvas id="widgetChart1"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="overview-item overview-item--c2"> <div class="overview__inner">
-                                    <div class="overview-box clearfix">
-                                        <div class="icon">
-                                            <i class="fas fa-calendar-plus"></i> </div>
-                                        <div class="text">
-                                            <h2><?php echo $total_reservasi_hari_ini; ?></h2> <span>Reservasi Baru (Hari Ini)</span> </div>
-                                    </div>
-                                    <div class="overview-chart">
-                                        <canvas id="widgetChart2"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="overview-item overview-item--c3"> <div class="overview__inner">
-                                    <div class="overview-box clearfix">
-                                        <div class="icon">
-                                            <i class="fas fa-user-check"></i> </div>
-                                        <div class="text">
-                                            <h2><?php echo $total_checkin_hari_ini; ?></h2> <span>Tamu Check-In (Hari Ini)</span> </div>
-                                    </div>
-                                    <div class="overview-chart">
-                                        <canvas id="widgetChart3"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="overview-item overview-item--c4"> <div class="overview__inner">
-                                    <div class="overview-box clearfix">
-                                        <div class="icon">
-                                            <i class="fas fa-dollar-sign"></i> </div>
-                                        <div class="text">
-                                            <h2>Rp <?php echo number_format($total_pendapatan_bulan_ini, 0, ',', '.'); ?></h2>
-                                            <span>Pendapatan (Bulan Ini)</span> </div>
-                                    </div>
-                                    <div class="overview-chart">
-                                        <canvas id="widgetChart4"></canvas>
-                                    </div>
-                                </div>
+                        <div class="col-lg-12">
+                            <h2 class="title-1 m-b-25">Daftar Master Kamar Hotel</h2>
+                            <div class="table-responsive table--no-card m-b-40">
+                                <table class="table table-borderless table-striped table-earning">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Kamar</th>
+                                            <th>Nomor Kamar</th>
+                                            <th>Tipe Kamar</th>
+                                            <th>Kapasitas</th>
+                                            <th>Harga/Malam</th>
+                                            <th>Status Saat Ini</th>
+                                            <th>Update Status</th>
+                                            <th class="text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        if ($result && mysqli_num_rows($result) > 0) {
+                                            $statuses = ['Available', 'Booked', 'Occupied', 'Cleaning'];
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                echo "<tr>";
+                                                echo "<td>" . htmlspecialchars($row['id_kamar']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['nomor_kamar']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['tipe_kamar']) . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['kapasitas']) . "</td>";
+                                                echo "<td>" . number_format($row['harga_per_malam']) . "</td>";
+                                                echo "<td><strong>" . htmlspecialchars($row['status_kamar']) . "</strong></td>";
+                                                echo "<form method='POST' action='update_status_kamar.php'>";
+                                                echo "<input type='hidden' name='id_kamar' value='" . $row['id_kamar'] . "'>";
+                                                echo "<td>";
+                                                echo "<select name='new_status' class='form-control form-control-sm' style='width: auto;'>";
+                                                foreach ($statuses as $status) {
+                                                    $selected = ($status == $row['status_kamar']) ? 'selected' : '';
+                                                    echo "<option value='{$status}' {$selected}>{$status}</option>";
+                                                }
+                                                echo "</select>";
+                                                echo "</td>";
+                                                echo "<td class='text-center'>";
+                                                echo "<button type='submit' class='btn btn-success btn-sm' style='padding: 5px 10px;'>";
+                                                echo "<i class='fa fa-check'></i> Simpan";
+                                                echo "</button>";
+                                                echo "</td>";
+                                                echo "</form>"; 
+                                                echo "</tr>";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='8' class='text-center'>Tidak ada data kamar ditemukan.</td></tr>";
+                                        }
+                                        mysqli_close($conn);
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -271,10 +243,14 @@ mysqli_close($conn);
         </div>
     </div>
 
-    <script src="js/vanilla-utils.js"></script>
-    <script src="vendor/bootstrap-5.3.8.bundle.min.js"></script>
-    <script src="vendor/perfect-scrollbar/perfect-scrollbar-1.5.6.min.js"></script>
-    <script src="vendor/chartjs/chart.umd.js-4.5.0.min.js"></script>
-    <script src="js/main-vanilla.js"></script>
-    </body>
+<script src="js/vanilla-utils.js"></script>
+<script src="vendor/bootstrap-5.3.8.bundle.min.js"></script>
+<script src="vendor/perfect-scrollbar/perfect-scrollbar-1.5.6.min.js"></script>
+<script src="vendor/chartjs/chart.umd.js-4.5.0.min.js"></script>
+<script src="js/bootstrap5-init.js"></script>
+<script src="js/main-vanilla.js"></script>
+<script src="js/swiper-bundle-11.2.10.min.js"></script>
+<script src="js/aos.js"></script>
+<script src="js/modern-plugins.js"></script>
+</body>
 </html>
