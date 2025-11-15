@@ -3515,11 +3515,31 @@ a:hover {
   transition: background-color 0.2s ease-in-out;
 }
 
+/* --- (BARU) CSS Untuk Status Berwarna --- */
+.table-earning tbody td .badge-status {
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    text-transform: capitalize;
+}
 
-.table-earning tbody td strong {
-  font-weight: 600;
-  color: #002877;
-  font-size: 15px;
+.table-earning tbody td .badge-available {
+    background-color: #28a745; /* Hijau */
+}
+
+.table-earning tbody td .badge-booked {
+    background-color: #ffc107; /* Kuning/Oranye */
+    color: #333; /* Teks gelap agar terbaca */
+}
+
+.table-earning tbody td .badge-occupied {
+    background-color: #dc3545; /* Merah */
+}
+
+.table-earning tbody td .badge-cleaning {
+    background-color: #17a2b8; /* Biru Muda */
 }
 
 
@@ -3550,6 +3570,35 @@ a:hover {
 .table-earning .btn-success:hover {
     background-color: #157e44;
     border-color: #157e44;
+}
+
+/* --- (BARU) Badge Status untuk Reservasi Kamar --- */
+.table-earning tbody td .badge-checked-in {
+    background-color: #28a745; /* Hijau */
+}
+
+.table-earning tbody td .badge-checked-out {
+    background-color: #6c757d; /* Abu-abu */
+}
+
+.table-earning tbody td .badge-canceled {
+    background-color: #dc3545; /* Merah */
+}
+
+
+
+.table-earning tbody td .badge-status {
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    text-transform: capitalize;
+}
+
+.table-earning tbody td .badge-booked {
+    background-color: #ffc107; /* Kuning */
+    color: #333; /* Teks gelap agar terbaca */
 }
 
 /* ----- Footer ----- */

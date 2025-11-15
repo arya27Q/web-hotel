@@ -1,6 +1,9 @@
 <?php
 include_once '../php/config.php';
 
+// (BARU) Atur koneksi untuk membaca data sebagai UTF-8
+mysqli_set_charset($conn, "utf8"); 
+
 // Cek notifikasi update
 if (isset($_GET['update']) && $_GET['update'] == 'success') {
     echo '<div class="alert alert-success" role="alert" style="margin-bottom:0;">Status pembayaran berhasil diperbarui!</div>';
@@ -34,9 +37,8 @@ if (!$result) {
     <link href="css/theme.css" rel="stylesheet" media="all">
 </head>
 <body>
-
+<div class="page-wrapper">
     
-  
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
             <a href="index.php">
@@ -148,10 +150,11 @@ if (!$result) {
                                             <th class="text-center">Aksi</th>
                                         </tr>
                                     </thead>
+                                    
                                     <tbody>
                                         <?php
                                         if ($result && mysqli_num_rows($result) > 0) {
-                                            // 'Lunas' ditambahkan
+                                            // Daftar status untuk dropdown
                                             $statuses = ['Pending', 'Paid', 'Lunas', 'Failed', 'Refunded']; 
 
                                             while ($row = mysqli_fetch_assoc($result)) {
@@ -163,13 +166,32 @@ if (!$result) {
                                                 echo "<td>" . htmlspecialchars($row['tanggal_pembayaran']) . "</td>";
                                                 echo "<td>" . htmlspecialchars($row['metode_pembayaran']) . "</td>";
                                                 echo "<td>" . number_format($row['total_amount']) . "</td>";
-                                                echo "<td><strong>" . htmlspecialchars($row['status_pembayaran']) . "</strong></td>";
+                                                
+                                                // --- (BARU) Logika untuk Badge Status Berwarna ---
+                                                $status_pembayaran = htmlspecialchars($row['status_pembayaran']);
+                                                $badge_class = '';
+                                                
+                                                if ($status_pembayaran == 'Paid' || $status_pembayaran == 'Lunas') {
+                                                    $badge_class = 'badge-checked-in'; // Hijau
+                                                } else if ($status_pembayaran == 'Pending') {
+                                                    $badge_class = 'badge-booked'; // Kuning
+                                                } else if ($status_pembayaran == 'Failed') {
+                                                    $badge_class = 'badge-canceled'; // Merah
+                                                } else if ($status_pembayaran == 'Refunded') {
+                                                    $badge_class = 'badge-checked-out'; // Abu-abu
+                                                } else {
+                                                    $badge_class = 'badge-secondary'; // Default
+                                                }
+                                                
+                                                echo "<td><span class='badge-status {$badge_class}'>{$status_pembayaran}</span></td>";
+                                                // --- Akhir Badge Status ---
 
                                                 echo "<form method='POST' action='update_status_pembayaran.php'>";
                                                 echo "<input type='hidden' name='payment_id' value='" . $row['payment_id'] . "'>";
                                                 
                                                 echo "<td>";
-                                                echo "<select name='new_status' class='form-control form-control-sm' '>";
+                                                // (DIPERBAIKI) Menghapus typo ' ' ekstra
+                                                echo "<select name='new_status' class='form-control form-control-sm'>";
                                                 foreach ($statuses as $status) {
                                                     $selected = ($status == $row['status_pembayaran']) ? 'selected' : '';
                                                     echo "<option value='{$status}' {$selected}>{$status}</option>";
@@ -178,7 +200,7 @@ if (!$result) {
                                                 echo "</td>";
 
                                                 echo "<td class='text-center'>";
-                                                echo "<button type='submit' class='btn btn-warning btn-sm' style='padding: 5px 10px; color: #fff;'>";
+                                                echo "<button type='submit' class='btn btn-warning btn-sm' style='padding: 5px 10px; color: #fff;'>"; // Tombol Update
                                                 echo "<i class='fa fa-edit'></i> Update";
                                                 echo "</button>";
                                                 echo "</td>";
@@ -192,7 +214,7 @@ if (!$result) {
                                         mysqli_close($conn);
                                         ?>
                                     </tbody>
-                                </table>
+                                    </table>
                             </div>
                         </div>
                     </div>

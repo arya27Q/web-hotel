@@ -2,6 +2,11 @@
 // Impor file koneksi database
 include_once '../php/config.php';
 
+// (BARU) Atur koneksi untuk membaca data sebagai UTF-8
+// Ini untuk memperbaiki error 'null' pada label grafik di halaman lain
+// dan memastikan konsistensi data
+mysqli_set_charset($conn, "utf8"); 
+
 // Cek notifikasi update
 if (isset($_GET['update']) && $_GET['update'] == 'success') {
     echo '<div class="alert alert-success" role="alert" style="margin-bottom:0;">Status kamar berhasil diperbarui!</div>';
@@ -135,17 +140,15 @@ if (!$result) {
                             <div class="account-wrap">
                                 <div class="account-item clearfix js-item-menu">
                                     <div class="image">
-                                        <img src="images/icon/avatar-01.jpg" alt="John Doe" />
-                                    </div>
+                                        <img src="" alt="" /> </div>
                                     <div class="content">
-                                        <a class="js-acc-btn" href="#">john doe</a>
+                                        <a class="js-acc-btn" href="#">YUDHIS</a>
                                     </div>
                                     <div class="account-dropdown js-dropdown">
                                         <div class="info clearfix">
                                             <div class="image">
                                                 <a href="#">
-                                                    <img src="images/icon/avatar-01.jpg" alt="John Doe" />
-                                                </a>
+                                                    <img src="" alt="" /> </a>
                                             </div>
                                             <div class="content">
                                                 <h5 class="name">
@@ -190,10 +193,14 @@ if (!$result) {
                                             <th class="text-center">Aksi</th>
                                         </tr>
                                     </thead>
+                                    
                                     <tbody>
                                         <?php
                                         if ($result && mysqli_num_rows($result) > 0) {
+                                            
+                                            // Definisikan status SATU KALI di luar loop
                                             $statuses = ['Available', 'Booked', 'Occupied', 'Cleaning'];
+                                            
                                             while ($row = mysqli_fetch_assoc($result)) {
                                                 echo "<tr>";
                                                 echo "<td>" . htmlspecialchars($row['id_kamar']) . "</td>";
@@ -201,16 +208,42 @@ if (!$result) {
                                                 echo "<td>" . htmlspecialchars($row['tipe_kamar']) . "</td>";
                                                 echo "<td>" . htmlspecialchars($row['kapasitas']) . "</td>";
                                                 echo "<td>" . number_format($row['harga_per_malam']) . "</td>";
-                                                echo "<td><strong>" . htmlspecialchars($row['status_kamar']) . "</strong></td>";
+                                                
+                                                // --- Logika untuk Badge Status Berwarna ---
+                                                // (Pastikan CSS untuk ini ada di theme.css)
+                                                $status_kamar = htmlspecialchars($row['status_kamar']);
+                                                $badge_class = '';
+                                                
+                                                if ($status_kamar == 'Available') {
+                                                    $badge_class = 'badge-available';
+                                                } else if ($status_kamar == 'Booked') {
+                                                    $badge_class = 'badge-booked';
+                                                } else if ($status_kamar == 'Occupied') {
+                                                    $badge_class = 'badge-occupied';
+                                                } else if ($status_kamar == 'Cleaning') {
+                                                    $badge_class = 'badge-cleaning';
+                                                }
+                                                echo "<td><span class='badge-status {$badge_class}'>{$status_kamar}</span></td>";
+                                                // --- Akhir Badge Status ---
+
                                                 echo "<form method='POST' action='update_status_kamar.php'>";
                                                 echo "<input type='hidden' name='id_kamar' value='" . $row['id_kamar'] . "'>";
                                                 echo "<td>";
-                                                echo "<select name='new_status' class='form-control form-control-sm' ";
+                                                
+                                                // --- Perbaikan Dropdown ---
+                                                // 1. Menutup tag <select> dengan benar (menambahkan '>')
+                                                // 2. Menghapus 'style="width: auto;"' agar CSS bisa mengatur lebar
+                                                echo "<select name='new_status' class='form-control form-control-sm'>";
+                                                
+                                                // 3. Loop 'foreach' sekarang akan berjalan sebagai PHP
                                                 foreach ($statuses as $status) {
                                                     $selected = ($status == $row['status_kamar']) ? 'selected' : '';
                                                     echo "<option value='{$status}' {$selected}>{$status}</option>";
                                                 }
+                                                
                                                 echo "</select>";
+                                                // --- Akhir Perbaikan Dropdown ---
+                                                
                                                 echo "</td>";
                                                 echo "<td class='text-center'>";
                                                 echo "<button type='submit' class='btn btn-success btn-sm' style='padding: 5px 10px;'>";
@@ -223,10 +256,9 @@ if (!$result) {
                                         } else {
                                             echo "<tr><td colspan='8' class='text-center'>Tidak ada data kamar ditemukan.</td></tr>";
                                         }
-                                        mysqli_close($conn);
                                         ?>
                                     </tbody>
-                                </table>
+                                    </table>
                             </div>
                         </div>
                     </div>
@@ -254,3 +286,7 @@ if (!$result) {
 <script src="js/modern-plugins.js"></script>
 </body>
 </html>
+<?php
+// Tutup koneksi di akhir file
+mysqli_close($conn);
+?>

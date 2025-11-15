@@ -2,6 +2,9 @@
 // Impor file koneksi database
 include_once '../php/config.php';
 
+// (BARU) Atur koneksi untuk membaca data sebagai UTF-8
+mysqli_set_charset($conn, "utf8"); 
+
 // Cek notifikasi update
 if (isset($_GET['update']) && $_GET['update'] == 'success') {
     echo '<div class="alert alert-success" role="alert" style="margin-bottom:0;">Status reservasi meeting berhasil diperbarui!</div>';
@@ -64,7 +67,7 @@ if (!$result) {
             </div>
             <nav class="navbar-mobile">
                 <div class="container-fluid">
-                </div>
+                    </div>
             </nav>
         </header>
         <aside class="menu-sidebar d-none d-lg-block">
@@ -92,8 +95,8 @@ if (!$result) {
                                 <i class="fas fa-desktop"></i>Reservasi Meeting</a>
                         </li>
                          <li>
-                        <a href="tabel_pembayaran.php"><i class="fas fa-credit-card"></i>Pembayaran</a>
-                         </li>
+                            <a href="tabel_pembayaran.php"><i class="fas fa-credit-card"></i>Pembayaran</a>
+                        </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-copy"></i>Pages</a>
@@ -126,8 +129,7 @@ if (!$result) {
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="images/icon/avatar-01.jpg" alt="John Doe" />
-                                        </div>
+                                            <img src="" alt="YUDHIS" /> </div>
                                         <div class="content">
                                             <a class="js-acc-btn" href="#">john doe</a>
                                         </div>
@@ -135,8 +137,7 @@ if (!$result) {
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/icon/avatar-01.jpg" alt="John Doe" />
-                                                    </a>
+                                                        <img src="" alt="YUDHIS" /> </a>
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
@@ -183,6 +184,7 @@ if (!$result) {
                                                 <th class="text-center">Aksi</th>
                                             </tr>
                                         </thead>
+                                        
                                         <tbody>
                                             <?php
                                             if ($result && mysqli_num_rows($result) > 0) {
@@ -199,14 +201,33 @@ if (!$result) {
                                                     echo "<td>" . htmlspecialchars($row['tipe_ruang_dipesan']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['tanggal_pemesanan']) . "</td>";
                                                     echo "<td>" . $waktu . "</td>";
-                                                    echo "<td><strong>" . htmlspecialchars($row['status_reservasi']) . "</strong></td>";
+                                                    
+                                                    // --- (BARU) Logika untuk Badge Status Berwarna ---
+                                                    $status_reservasi = htmlspecialchars($row['status_reservasi']);
+                                                    $badge_class = '';
+                                                    
+                                                    if ($status_reservasi == 'Booked') {
+                                                        $badge_class = 'badge-booked'; // Kuning
+                                                    } else if ($status_reservasi == 'Checked-In') {
+                                                        $badge_class = 'badge-checked-in'; // Hijau
+                                                    } else if ($status_reservasi == 'Checked-Out') {
+                                                        $badge_class = 'badge-checked-out'; // Abu-abu
+                                                    } else if ($status_reservasi == 'Canceled') {
+                                                        $badge_class = 'badge-canceled'; // Merah
+                                                    } else {
+                                                        $badge_class = 'badge-secondary'; // Default
+                                                    }
+                                                    
+                                                    echo "<td><span class='badge-status {$badge_class}'>{$status_reservasi}</span></td>";
+                                                    // --- Akhir Badge Status ---
 
                                                     // Form untuk Update Status
                                                     echo "<form method='POST' action='update_status_meeting.php'>";
                                                     echo "<input type='hidden' name='id_reservasi_meeting' value='" . $row['id_reservasi_meeting'] . "'>";
                                                     
                                                     echo "<td>";
-                                                    echo "<select name='new_status' class='form-control form-control-sm' '>";
+                                                    // (DIPERBAIKI) Menghapus ' ' ekstra di akhir tag select
+                                                    echo "<select name='new_status' class='form-control form-control-sm'>";
                                                     foreach ($statuses as $status) {
                                                         $selected = ($status == $row['status_reservasi']) ? 'selected' : '';
                                                         echo "<option value='{$status}' {$selected}>{$status}</option>";
@@ -215,6 +236,7 @@ if (!$result) {
                                                     echo "</td>";
 
                                                     echo "<td class='text-center'>";
+                                                    // (DIPERBAIKI) Menutup tag <button> dengan benar (menambahkan '>')
                                                     echo "<button type='submit' class='btn btn-primary btn-sm' style='padding: 5px 10px;'>";
                                                     echo "<i class='fa fa-edit'></i> Update";
                                                     echo "</button>";
@@ -230,7 +252,7 @@ if (!$result) {
                                             mysqli_close($conn);
                                             ?>
                                         </tbody>
-                                    </table>
+                                        </table>
                                 </div>
                                 
                             </div>

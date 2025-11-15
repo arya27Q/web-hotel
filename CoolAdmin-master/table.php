@@ -2,6 +2,9 @@
 // Impor file koneksi database
 include_once '../php/config.php';
 
+// (BARU) Atur koneksi untuk membaca data sebagai UTF-8
+mysqli_set_charset($conn, "utf8"); 
+
 // (Kita pindahkan pesan sukses ke halaman ini)
 if (isset($_GET['update']) && $_GET['update'] == 'success') {
     echo '<div class="alert alert-success" role="alert" style="margin-bottom:0;">Status reservasi berhasil diperbarui!</div>';
@@ -29,7 +32,8 @@ $result = mysqli_query($conn, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Tabel Tamu</title> <link href="css/font-face.css" rel="stylesheet" media="all">
+    <title>Tabel Tamu</title>
+    <link href="css/font-face.css" rel="stylesheet" media="all">
     <link href="vendor/fontawesome-7.0.1/css/all.min.css" rel="stylesheet" media="all">
     <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="vendor/bootstrap-5.3.8.min.css" rel="stylesheet" media="all">
@@ -56,10 +60,10 @@ $result = mysqli_query($conn, $sql);
         </div>
         <nav class="navbar-mobile">
             <div class="container-fluid">
-            </div>
+                </div>
         </nav>
     </header>
- <aside class="menu-sidebar d-none d-lg-block">
+<aside class="menu-sidebar d-none d-lg-block">
     <div class="logo">
         <a href="index.php">
             <img src="../CoolAdmin-master/images/logo.png" alt="Luxury Hotel"  style="width: 80px; height: 80px; margin-left: 4.5rem;"/>
@@ -87,8 +91,8 @@ $result = mysqli_query($conn, $sql);
                         <i class="fas fa-desktop"></i>Reservasi Meeting</a>
                 </li>
                  <li>
-                  <a href="tabel_pembayaran.php"><i class="fas fa-credit-card"></i>Pembayaran</a>
-                    </li>
+                    <a href="tabel_pembayaran.php"><i class="fas fa-credit-card"></i>Pembayaran</a>
+                </li>
                 <li class="has-sub">
                     <a class="js-arrow" href="#">
                         <i class="fas fa-copy"></i>Pages</a>
@@ -178,6 +182,7 @@ $result = mysqli_query($conn, $sql);
                                                 <th class="text-center">Aksi</th>
                                             </tr>
                                         </thead>
+                                        
                                         <tbody>
                                             <?php
                                             // Cek jika ada hasil
@@ -192,14 +197,33 @@ $result = mysqli_query($conn, $sql);
                                                     echo "<td>" . htmlspecialchars($row['email']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['tipe_kamar_dipesan']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['tanggal_check_in']) . "</td>";
-                                                    echo "<td><strong>" . htmlspecialchars($row['status_reservasi']) . "</strong></td>";
+                                                    
+                                                    // --- (BARU) Logika untuk Badge Status Berwarna ---
+                                                    $status_reservasi = htmlspecialchars($row['status_reservasi']);
+                                                    $badge_class = '';
+                                                    
+                                                    if ($status_reservasi == 'Booked') {
+                                                        $badge_class = 'badge-booked'; // Kuning
+                                                    } else if ($status_reservasi == 'Checked-In') {
+                                                        $badge_class = 'badge-checked-in'; // Hijau
+                                                    } else if ($status_reservasi == 'Checked-Out') {
+                                                        $badge_class = 'badge-checked-out'; // Abu-abu
+                                                    } else if ($status_reservasi == 'Canceled') {
+                                                        $badge_class = 'badge-canceled'; // Merah
+                                                    } else {
+                                                        $badge_class = 'badge-secondary'; // Default
+                                                    }
+                                                    
+                                                    echo "<td><span class='badge-status {$badge_class}'>{$status_reservasi}</span></td>";
+                                                    // --- Akhir Badge Status ---
 
                                                     // Form untuk Update Status
-                                                    echo "<form method='POST' action='update_status.php'>"; // Form menargetkan file baru
+                                                    echo "<form method='POST' action='update_status.php'>";
                                                     echo "<input type='hidden' name='id_reservasi' value='" . $row['id_reservasi'] . "'>";
                                                     
                                                     echo "<td>";
-                                                    echo "<select name='new_status' class='form-control form-control-sm' ";
+                                                    // (DIPERBAIKI) Menutup tag select dengan benar
+                                                    echo "<select name='new_status' class='form-control form-control-sm'>";
                                                     foreach ($statuses as $status) {
                                                         // Tampilkan status yang saat ini terpilih
                                                         $selected = ($status == $row['status_reservasi']) ? 'selected' : '';
@@ -209,7 +233,7 @@ $result = mysqli_query($conn, $sql);
                                                     echo "</td>";
 
                                                     echo "<td class='text-center'>";
-                                                   echo "<button type='submit' class='btn btn-primary btn-sm' style='padding: 5px 10px;'>";
+                                                    echo "<button type='submit' class='btn btn-primary btn-sm' style='padding: 5px 10px;'>";
                                                     echo "<i class='fa fa-edit'></i> Update";
                                                     echo "</button>";
                                                     echo "</td>";
@@ -224,7 +248,7 @@ $result = mysqli_query($conn, $sql);
                                             mysqli_close($conn);
                                             ?>
                                         </tbody>
-                                    </table>
+                                        </table>
                                 </div>
                             </div>
                         </div>
