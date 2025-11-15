@@ -2,17 +2,16 @@
 // Impor file koneksi database
 include_once '../php/config.php';
 
-// (BARU) Atur koneksi untuk membaca data sebagai UTF-8
-// Ini untuk memperbaiki error 'null' pada label grafik di halaman lain
-// dan memastikan konsistensi data
+
+
 mysqli_set_charset($conn, "utf8"); 
 
-// Cek notifikasi update
+
 if (isset($_GET['update']) && $_GET['update'] == 'success') {
     echo '<div class="alert alert-success" role="alert" style="margin-bottom:0;">Status kamar berhasil diperbarui!</div>';
 }
 
-// Query SQL untuk mengambil data dari tabel 'kamar'
+
 $sql = "SELECT id_kamar, nomor_kamar, tipe_kamar, kapasitas, harga_per_malam, status_kamar FROM kamar ORDER BY id_kamar ASC";
 $result = mysqli_query($conn, $sql);
 
@@ -198,7 +197,7 @@ if (!$result) {
                                         <?php
                                         if ($result && mysqli_num_rows($result) > 0) {
                                             
-                                            // Definisikan status SATU KALI di luar loop
+                                          
                                             $statuses = ['Available', 'Booked', 'Occupied', 'Cleaning'];
                                             
                                             while ($row = mysqli_fetch_assoc($result)) {
@@ -209,8 +208,7 @@ if (!$result) {
                                                 echo "<td>" . htmlspecialchars($row['kapasitas']) . "</td>";
                                                 echo "<td>" . number_format($row['harga_per_malam']) . "</td>";
                                                 
-                                                // --- Logika untuk Badge Status Berwarna ---
-                                                // (Pastikan CSS untuk ini ada di theme.css)
+                                              
                                                 $status_kamar = htmlspecialchars($row['status_kamar']);
                                                 $badge_class = '';
                                                 
@@ -224,25 +222,19 @@ if (!$result) {
                                                     $badge_class = 'badge-cleaning';
                                                 }
                                                 echo "<td><span class='badge-status {$badge_class}'>{$status_kamar}</span></td>";
-                                                // --- Akhir Badge Status ---
 
                                                 echo "<form method='POST' action='update_status_kamar.php'>";
                                                 echo "<input type='hidden' name='id_kamar' value='" . $row['id_kamar'] . "'>";
                                                 echo "<td>";
-                                                
-                                                // --- Perbaikan Dropdown ---
-                                                // 1. Menutup tag <select> dengan benar (menambahkan '>')
-                                                // 2. Menghapus 'style="width: auto;"' agar CSS bisa mengatur lebar
                                                 echo "<select name='new_status' class='form-control form-control-sm'>";
-                                                
-                                                // 3. Loop 'foreach' sekarang akan berjalan sebagai PHP
+
                                                 foreach ($statuses as $status) {
                                                     $selected = ($status == $row['status_kamar']) ? 'selected' : '';
                                                     echo "<option value='{$status}' {$selected}>{$status}</option>";
                                                 }
                                                 
                                                 echo "</select>";
-                                                // --- Akhir Perbaikan Dropdown ---
+                                                
                                                 
                                                 echo "</td>";
                                                 echo "<td class='text-center'>";
@@ -287,6 +279,6 @@ if (!$result) {
 </body>
 </html>
 <?php
-// Tutup koneksi di akhir file
+
 mysqli_close($conn);
 ?>

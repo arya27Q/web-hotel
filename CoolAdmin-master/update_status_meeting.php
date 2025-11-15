@@ -27,9 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Jalankan Statement
             if (mysqli_stmt_execute($stmt)) {
-                // ========================================================
-                // PERBAIKAN: Redirect kembali ke 'tabel_meeting.php' (pakai 'a')
-                // ========================================================
+               
                 header("location: tabel_meeting.php?update=success"); 
                 exit();
             } else {

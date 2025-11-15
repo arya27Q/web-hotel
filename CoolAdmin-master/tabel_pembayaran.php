@@ -154,7 +154,7 @@ if (!$result) {
                                     <tbody>
                                         <?php
                                         if ($result && mysqli_num_rows($result) > 0) {
-                                            // Daftar status untuk dropdown
+                                           
                                             $statuses = ['Pending', 'Paid', 'Lunas', 'Failed', 'Refunded']; 
 
                                             while ($row = mysqli_fetch_assoc($result)) {
@@ -167,30 +167,30 @@ if (!$result) {
                                                 echo "<td>" . htmlspecialchars($row['metode_pembayaran']) . "</td>";
                                                 echo "<td>" . number_format($row['total_amount']) . "</td>";
                                                 
-                                                // --- (BARU) Logika untuk Badge Status Berwarna ---
+                                                
                                                 $status_pembayaran = htmlspecialchars($row['status_pembayaran']);
                                                 $badge_class = '';
                                                 
                                                 if ($status_pembayaran == 'Paid' || $status_pembayaran == 'Lunas') {
-                                                    $badge_class = 'badge-checked-in'; // Hijau
+                                                    $badge_class = 'badge-checked-in'; 
                                                 } else if ($status_pembayaran == 'Pending') {
-                                                    $badge_class = 'badge-booked'; // Kuning
+                                                    $badge_class = 'badge-booked'; 
                                                 } else if ($status_pembayaran == 'Failed') {
-                                                    $badge_class = 'badge-canceled'; // Merah
+                                                    $badge_class = 'badge-canceled'; 
                                                 } else if ($status_pembayaran == 'Refunded') {
-                                                    $badge_class = 'badge-checked-out'; // Abu-abu
+                                                    $badge_class = 'badge-checked-out'; 
                                                 } else {
-                                                    $badge_class = 'badge-secondary'; // Default
+                                                    $badge_class = 'badge-secondary'; 
                                                 }
                                                 
                                                 echo "<td><span class='badge-status {$badge_class}'>{$status_pembayaran}</span></td>";
-                                                // --- Akhir Badge Status ---
+                                               
 
                                                 echo "<form method='POST' action='update_status_pembayaran.php'>";
                                                 echo "<input type='hidden' name='payment_id' value='" . $row['payment_id'] . "'>";
                                                 
                                                 echo "<td>";
-                                                // (DIPERBAIKI) Menghapus typo ' ' ekstra
+                                                
                                                 echo "<select name='new_status' class='form-control form-control-sm'>";
                                                 foreach ($statuses as $status) {
                                                     $selected = ($status == $row['status_pembayaran']) ? 'selected' : '';

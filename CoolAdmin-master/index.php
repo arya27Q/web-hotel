@@ -2,29 +2,23 @@
 // Impor file koneksi database
 include_once '../php/config.php';
 
-// ========================================================
-// ========= 4 KUERI UNTUK WIDGET OVERVIEW =========
-// ========================================================
 
-// 1. Kamar Terisi
 $sql_terisi = "SELECT COUNT(*) as total_terisi FROM reservasi_kamar WHERE status_reservasi = 'Checked-In'";
 $hasil_terisi = mysqli_query($conn, $sql_terisi);
 $data_terisi = mysqli_fetch_assoc($hasil_terisi);
 $total_terisi = $data_terisi['total_terisi'];
 
-// 2. Reservasi Baru (Hari Ini)
 $sql_reservasi_hari_ini = "SELECT COUNT(*) as total_reservasi_hari_ini FROM reservasi_kamar WHERE DATE(tanggal_reservasi) = CURDATE()";
 $hasil_reservasi_hari_ini = mysqli_query($conn, $sql_reservasi_hari_ini);
 $data_reservasi_hari_ini = mysqli_fetch_assoc($hasil_reservasi_hari_ini);
 $total_reservasi_hari_ini = $data_reservasi_hari_ini['total_reservasi_hari_ini'];
 
-// 3. Reservasi Meeting (Hari Ini)
+
 $sql_meeting_hari_ini = "SELECT COUNT(*) as total_meeting_hari_ini FROM reservasi_meeting WHERE DATE(tanggal_pemesanan) = CURDATE()";
 $hasil_meeting_hari_ini = mysqli_query($conn, $sql_meeting_hari_ini);
 $data_meeting_hari_ini = mysqli_fetch_assoc($hasil_meeting_hari_ini);
 $total_meeting_hari_ini = $data_meeting_hari_ini['total_meeting_hari_ini'] ?? 0;
 
-// 4. Pendapatan (Bulan Ini)
 $sql_pendapatan = "SELECT SUM(total_amount) as total_pendapatan_bulan_ini FROM pembayaran 
                    WHERE status_pembayaran IN ('Paid', 'Lunas') 
                    AND MONTH(tanggal_pembayaran) = MONTH(CURDATE())
@@ -33,11 +27,7 @@ $hasil_pendapatan = mysqli_query($conn, $sql_pendapatan);
 $data_pendapatan = mysqli_fetch_assoc($hasil_pendapatan);
 $total_pendapatan_bulan_ini = $data_pendapatan['total_pendapatan_bulan_ini'] ?? 0;
 
-// ========================================================
-// ========= KUERI BARU UNTUK GRAFIK BAWAH =========
-// ========================================================
 
-// 5. Data Grafik Bar (Pendapatan 7 Hari Terakhir)
 $pendapatan_labels = [];
 $pendapatan_data_map = [];
 for ($i = 6; $i >= 0; $i--) {
@@ -67,7 +57,7 @@ if ($hasil_pendapatan_harian) {
 $pendapatan_data = array_values($pendapatan_data_map);
 
 
-// 6. Data Grafik Pie (Status Kamar)
+
 $sql_status_kamar = "SELECT status_kamar, COUNT(*) as jumlah FROM kamar GROUP BY status_kamar";
 $hasil_status_kamar = mysqli_query($conn, $sql_status_kamar);
 
@@ -80,18 +70,15 @@ if ($hasil_status_kamar) {
     }
 }
 
-// ========================================================
-// ========= 7. (DIUBAH) KUERI GRAFIK POPULARITAS MEETING ===
-// ========================================================
-// Menghitung tipe ruang meeting mana yang paling sering dipesan
+
 $sql_popularitas_meeting = "SELECT tipe_ruang_dipesan, COUNT(*) as jumlah 
                             FROM reservasi_meeting 
                             GROUP BY tipe_ruang_dipesan 
                             ORDER BY jumlah DESC";
 $hasil_popularitas_meeting = mysqli_query($conn, $sql_popularitas_meeting);
 
-$meeting_status_labels = []; // Akan berisi nama ruang (cth: 'Bima Ballroom')
-$meeting_status_data = [];   // Akan berisi jumlah (cth: 5)
+$meeting_status_labels = []; 
+$meeting_status_data = [];   
 if ($hasil_popularitas_meeting) {
     while ($row = mysqli_fetch_assoc($hasil_popularitas_meeting)) {
         $meeting_status_labels[] = $row['tipe_ruang_dipesan'];

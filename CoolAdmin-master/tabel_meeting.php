@@ -2,15 +2,12 @@
 // Impor file koneksi database
 include_once '../php/config.php';
 
-// (BARU) Atur koneksi untuk membaca data sebagai UTF-8
 mysqli_set_charset($conn, "utf8"); 
 
-// Cek notifikasi update
 if (isset($_GET['update']) && $_GET['update'] == 'success') {
     echo '<div class="alert alert-success" role="alert" style="margin-bottom:0;">Status reservasi meeting berhasil diperbarui!</div>';
 }
 
-// KODE SQL ANDA SUDAH BENAR
 $sql = "SELECT
             rm.id_reservasi_meeting,
             rm.tanggal_pemesanan, 
@@ -188,7 +185,7 @@ if (!$result) {
                                         <tbody>
                                             <?php
                                             if ($result && mysqli_num_rows($result) > 0) {
-                                                // Status sesuai ENUM di DB Anda
+                                                
                                                 $statuses = ['Booked', 'Checked-In', 'Checked-Out', 'Canceled'];
 
                                                 while ($row = mysqli_fetch_assoc($result)) {
@@ -202,31 +199,29 @@ if (!$result) {
                                                     echo "<td>" . htmlspecialchars($row['tanggal_pemesanan']) . "</td>";
                                                     echo "<td>" . $waktu . "</td>";
                                                     
-                                                    // --- (BARU) Logika untuk Badge Status Berwarna ---
+                                                   
                                                     $status_reservasi = htmlspecialchars($row['status_reservasi']);
                                                     $badge_class = '';
                                                     
                                                     if ($status_reservasi == 'Booked') {
-                                                        $badge_class = 'badge-booked'; // Kuning
+                                                        $badge_class = 'badge-booked'; 
                                                     } else if ($status_reservasi == 'Checked-In') {
-                                                        $badge_class = 'badge-checked-in'; // Hijau
+                                                        $badge_class = 'badge-checked-in'; 
                                                     } else if ($status_reservasi == 'Checked-Out') {
-                                                        $badge_class = 'badge-checked-out'; // Abu-abu
+                                                        $badge_class = 'badge-checked-out'; 
                                                     } else if ($status_reservasi == 'Canceled') {
-                                                        $badge_class = 'badge-canceled'; // Merah
+                                                        $badge_class = 'badge-canceled'; 
                                                     } else {
-                                                        $badge_class = 'badge-secondary'; // Default
+                                                        $badge_class = 'badge-secondary'; 
                                                     }
                                                     
                                                     echo "<td><span class='badge-status {$badge_class}'>{$status_reservasi}</span></td>";
-                                                    // --- Akhir Badge Status ---
-
-                                                    // Form untuk Update Status
+                                                    
                                                     echo "<form method='POST' action='update_status_meeting.php'>";
                                                     echo "<input type='hidden' name='id_reservasi_meeting' value='" . $row['id_reservasi_meeting'] . "'>";
                                                     
                                                     echo "<td>";
-                                                    // (DIPERBAIKI) Menghapus ' ' ekstra di akhir tag select
+                                                    
                                                     echo "<select name='new_status' class='form-control form-control-sm'>";
                                                     foreach ($statuses as $status) {
                                                         $selected = ($status == $row['status_reservasi']) ? 'selected' : '';
@@ -236,7 +231,7 @@ if (!$result) {
                                                     echo "</td>";
 
                                                     echo "<td class='text-center'>";
-                                                    // (DIPERBAIKI) Menutup tag <button> dengan benar (menambahkan '>')
+                                                   
                                                     echo "<button type='submit' class='btn btn-primary btn-sm' style='padding: 5px 10px;'>";
                                                     echo "<i class='fa fa-edit'></i> Update";
                                                     echo "</button>";
@@ -246,7 +241,7 @@ if (!$result) {
                                                     echo "</tr>";
                                                 }
                                             } else {
-                                                // Colspan 9 (sesuai jumlah <th>)
+                                               
                                                 echo "<tr><td colspan='9' class='text-center'>Tidak ada data reservasi meeting ditemukan.</td></tr>";
                                             }
                                             mysqli_close($conn);

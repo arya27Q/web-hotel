@@ -2,15 +2,14 @@
 // Impor file koneksi database
 include_once '../php/config.php';
 
-// (BARU) Atur koneksi untuk membaca data sebagai UTF-8
+
 mysqli_set_charset($conn, "utf8"); 
 
-// (Kita pindahkan pesan sukses ke halaman ini)
+
 if (isset($_GET['update']) && $_GET['update'] == 'success') {
     echo '<div class="alert alert-success" role="alert" style="margin-bottom:0;">Status reservasi berhasil diperbarui!</div>';
 }
 
-// Query SQL untuk mengambil data reservasi kamar
 $sql = "SELECT
             rk.id_reservasi, rk.tanggal_check_in, rk.tanggal_check_out, rk.jumlah_tamu,
             rk.tipe_kamar_dipesan, rk.total_biaya, rk.status_reservasi, t.nama_lengkap,
@@ -22,7 +21,7 @@ $sql = "SELECT
         LEFT JOIN
             kamar k ON rk.id_kamar = k.id_kamar
         ORDER BY 
-            rk.id_reservasi DESC"; // Urutkan agar yang terbaru di atas
+            rk.id_reservasi DESC"; 
 
 $result = mysqli_query($conn, $sql);
 ?>
@@ -176,7 +175,7 @@ $result = mysqli_query($conn, $sql);
                                                 <th>Nama Tamu</th>
                                                 <th>Email</th>
                                                 <th>Tipe Kamar</th>
-                                                <th>Check-in</th>
+                                                <th>waktu</th>
                                                 <th>Status Saat Ini</th>
                                                 <th>Pilih Status Baru</th>
                                                 <th class="text-center">Aksi</th>
@@ -185,9 +184,9 @@ $result = mysqli_query($conn, $sql);
                                         
                                         <tbody>
                                             <?php
-                                            // Cek jika ada hasil
+                                           
                                             if ($result && mysqli_num_rows($result) > 0) {
-                                                // Array status yang valid
+                                              
                                                 $statuses = ['Booked', 'Checked-In', 'Checked-Out', 'Canceled'];
 
                                                 while ($row = mysqli_fetch_assoc($result)) {
@@ -198,34 +197,29 @@ $result = mysqli_query($conn, $sql);
                                                     echo "<td>" . htmlspecialchars($row['tipe_kamar_dipesan']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['tanggal_check_in']) . "</td>";
                                                     
-                                                    // --- (BARU) Logika untuk Badge Status Berwarna ---
+                                                   
                                                     $status_reservasi = htmlspecialchars($row['status_reservasi']);
                                                     $badge_class = '';
                                                     
                                                     if ($status_reservasi == 'Booked') {
-                                                        $badge_class = 'badge-booked'; // Kuning
+                                                        $badge_class = 'badge-booked'; 
                                                     } else if ($status_reservasi == 'Checked-In') {
-                                                        $badge_class = 'badge-checked-in'; // Hijau
+                                                        $badge_class = 'badge-checked-in'; 
                                                     } else if ($status_reservasi == 'Checked-Out') {
-                                                        $badge_class = 'badge-checked-out'; // Abu-abu
+                                                        $badge_class = 'badge-checked-out'; 
                                                     } else if ($status_reservasi == 'Canceled') {
-                                                        $badge_class = 'badge-canceled'; // Merah
+                                                        $badge_class = 'badge-canceled'; 
                                                     } else {
-                                                        $badge_class = 'badge-secondary'; // Default
+                                                        $badge_class = 'badge-secondary'; 
                                                     }
                                                     
                                                     echo "<td><span class='badge-status {$badge_class}'>{$status_reservasi}</span></td>";
-                                                    // --- Akhir Badge Status ---
-
-                                                    // Form untuk Update Status
                                                     echo "<form method='POST' action='update_status.php'>";
                                                     echo "<input type='hidden' name='id_reservasi' value='" . $row['id_reservasi'] . "'>";
-                                                    
                                                     echo "<td>";
-                                                    // (DIPERBAIKI) Menutup tag select dengan benar
                                                     echo "<select name='new_status' class='form-control form-control-sm'>";
                                                     foreach ($statuses as $status) {
-                                                        // Tampilkan status yang saat ini terpilih
+                                                        
                                                         $selected = ($status == $row['status_reservasi']) ? 'selected' : '';
                                                         echo "<option value='{$status}' {$selected}>{$status}</option>";
                                                     }
@@ -244,7 +238,7 @@ $result = mysqli_query($conn, $sql);
                                             } else {
                                                 echo "<tr><td colspan='8' class='text-center'>Tidak ada data reservasi ditemukan.</td></tr>";
                                             }
-                                            // Tutup koneksi database
+                                          
                                             mysqli_close($conn);
                                             ?>
                                         </tbody>
