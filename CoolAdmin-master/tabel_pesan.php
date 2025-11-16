@@ -144,64 +144,64 @@ if (!$result) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-                                            if ($result && mysqli_num_rows($result) > 0) :
-                                                $statuses = ['Baru', 'Sudah Dibaca', 'Sudah Dibalas']; // Opsi status
+    <?php
+    if ($result && mysqli_num_rows($result) > 0) :
+        $statuses = ['Baru', 'Sudah Dibaca', 'Sudah Dibalas']; // Opsi status
 
-                                                while ($row = mysqli_fetch_assoc($result)) :
-                                            ?>
-                                                    <tr>
-                                                        <td><?= htmlspecialchars($row['id_pesan']) ?></td>
-                                                        <td><?= htmlspecialchars($row['nama_lengkap']) ?></td>
-                                                        <td><?= htmlspecialchars($row['email']) ?></td>
-                                                        
-                                                        <td style="min-width: 300px; white-space: normal;"><?= htmlspecialchars($row['pesan']) ?></td>
-                                                        
-                                                        <td><?= htmlspecialchars($row['tanggal_kirim']) ?></td>
-                                                        
-                                                        <td>
-                                                           <span class="badge 
-                                                                <?php 
-                                                                if ($row['status'] == 'Baru') echo 'badge-danger'; // Merah untuk 'Baru'
-                                                                else if ($row['status'] == 'Sudah Dibaca') echo 'badge-warning'; // Kuning untuk 'Sudah Dibaca'
-                                                                else echo 'badge-success'; // Hijau untuk 'Sudah Dibalas'
-                                                                ?>
-                                                           ">
-                                                                <?= htmlspecialchars($row['status']) ?>
-                                                           </span>
-                                                        </td>
+        while ($row = mysqli_fetch_assoc($result)) :
+    ?>
+            <tr>
+                <td><?= htmlspecialchars($row['id_pesan'] ?? '') ?></td>
+                <td><?= htmlspecialchars($row['nama_lengkap'] ?? '') ?></td>
+                <td><?= htmlspecialchars($row['email'] ?? '') ?></td>
+                
+                <td style="min-width: 300px; white-space: normal;"><?= htmlspecialchars($row['pesan'] ?? '') ?></td>
+                
+                <td><?= htmlspecialchars($row['tanggal_kirim'] ?? '') ?></td>
+                
+                <td>
+                    <span class="badge 
+                        <?php 
+                        if (($row['status'] ?? 'Baru') == 'Baru') echo 'badge-danger';
+                        else if ($row['status'] == 'Sudah Dibaca') echo 'badge-warning'; 
+                        else echo 'badge-success'; 
+                        ?>
+                    ">
+                        <?= htmlspecialchars($row['status'] ?? 'Baru') ?>
+                    </span>
+                </td>
 
-                                                        <form method='POST' action='update_status_pesan.php'> <input type='hidden' name='id_pesan' value='<?= $row['id_pesan'] ?>'>
-                                                            
-                                                            <td>
-                                                                <select name='new_status' class='form-control form-control-sm'>
-                                                                    <?php foreach ($statuses as $status) : ?>
-                                                                        <?php $selected = ($status == $row['status']) ? 'selected' : ''; ?>
-                                                                        <option value='<?= $status ?>' <?= $selected ?>><?= $status ?></option>
-                                                                    <?php endforeach; ?>
-                                                                </select>
-                                                            </td>
+                <form method='POST' action='update_status_pesan.php'> 
+                    <input type='hidden' name='id_pesan' value='<?= $row['id_pesan'] ?>'>
+                    
+                    <td>
+                        <select name='new_status' class='form-control form-control-sm'>
+                            <?php foreach ($statuses as $status) : ?>
+                                <?php $selected = ($status == ($row['status'] ?? 'Baru')) ? 'selected' : ''; ?>
+                                <option value='<?= $status ?>' <?= $selected ?>><?= $status ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
 
-                                                            <td class='text-center'>
-                                                                <button type='submit' class='btn btn-primary btn-sm' style='padding: 5px 10px;'>
-                                                                    <i class='fa fa-edit'></i> Update
-                                                                </button>
-                                                                
-                                                                </td>
-                                                        </form>
-                                                    </tr>
-                                            <?php
-                                                endwhile;
-                                            else :
-                                            ?>
-                                                <tr>
-                                                    <td colspan='8' class='text-center'>Tidak ada pesan masuk.</td>
-                                                </tr>
-                                            <?php
-                                            endif;
-                                            mysqli_close($conn);
-                                            ?>
-                                        </tbody>
+                    <td class='text-center'>
+                        <button type='submit' class='btn btn-primary btn-sm' style='padding: 5px 10px;'>
+                            <i class='fa fa-edit'></i> Update
+                        </button>
+                    </td>
+                </form>
+            </tr>
+        <?php
+        endwhile;
+    else :
+        ?>
+        <tr>
+            <td colspan='8' class='text-center'>Tidak ada pesan masuk.</td>
+        </tr>
+    <?php
+    endif;
+    mysqli_close($conn);
+    ?>
+</tbody>
                                     </table>
                                 </div>
                             </div>
