@@ -1,5 +1,5 @@
 <?php
-include '../php/create_account.php';
+include 'create_account.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
