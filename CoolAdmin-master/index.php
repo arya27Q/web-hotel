@@ -139,9 +139,9 @@ if ($hasil_popularitas_meeting) {
                     <li class="has-sub">
                         <a class="js-arrow" href="#"><i class="fas fa-copy"></i>Pages</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="forget-pass.html">Forget Password</a></li>
+                            <li><a href="login.php">Login</a></li>
+                            <li><a href="register.php">Register</a></li>
+                            <li><a href="forget-pass.php">Forget Password</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -178,9 +178,9 @@ if ($hasil_popularitas_meeting) {
                         <a class="js-arrow" href="#">
                             <i class="fas fa-copy"></i>Pages</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="forget-pass.html">Forget Password</a></li>
+                            <li><a href="login.php">Login</a></li>
+                            <li><a href="register.php">Register</a></li>
+                            <li><a href="forget-pass.php">Forget Password</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -229,7 +229,7 @@ if ($hasil_popularitas_meeting) {
                                             </div>
                                         </div>
                                         <div class="account-dropdown__footer">
-                                            <a href="#"><i class="zmdi zmdi-power"></i>Logout</a>
+                                            <a href="logout.php"><i class="zmdi zmdi-power"></i>Logout</a>
                                         </div>
                                     </div>
                                 </div>

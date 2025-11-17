@@ -1,3 +1,84 @@
+<?php
+// Mulai session
+session_start();
+ 
+// Cek jika pengguna sudah login, alihkan ke dashboard admin
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+    header("location: admin/index.php");
+    exit;
+}
+ 
+// Impor file koneksi
+include_once '../php/config.php';
+ 
+// Definisikan variabel
+$email = $password = "";
+$email_err = $password_err = $login_err = "";
+ 
+// Proses data saat form disubmit
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+ 
+    // Cek jika email kosong
+    if (empty(trim($_POST["email"]))) {
+        $email_err = "Silakan masukkan email.";
+    } else {
+        $email = trim($_POST["email"]);
+    }
+ 
+    // Cek jika password kosong
+    if (empty(trim($_POST["password"]))) {
+        $password_err = "Silakan masukkan password.";
+    } else {
+        $password = trim($_POST["password"]);
+    }
+ 
+    // Validasi kredensial
+    if (empty($email_err) && empty($password_err)) {
+        // Siapkan statement select
+        $sql = "SELECT id_admin, username, email, password_hash, role FROM admin WHERE email = ?";
+        
+        if ($stmt = mysqli_prepare($conn, $sql)) {
+            mysqli_stmt_bind_param($stmt, "s", $param_email);
+            $param_email = $email;
+            
+            if (mysqli_stmt_execute($stmt)) {
+                mysqli_stmt_store_result($stmt);
+                
+                // Cek jika email ada, lalu verifikasi password
+                if (mysqli_stmt_num_rows($stmt) == 1) {
+                    mysqli_stmt_bind_result($stmt, $id_admin, $username, $db_email, $hashed_password, $role);
+                    if (mysqli_stmt_fetch($stmt)) {
+                        if (password_verify($password, $hashed_password)) {
+                            // Password benar, mulai session baru
+                            session_start();
+                            
+                            // Simpan data di session
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["id_admin"] = $id_admin;
+                            $_SESSION["username"] = $username;
+                            $_SESSION["role"] = $role;
+                            
+                            // Alihkan ke dashboard admin
+                            header("location: admin/index.php");
+                        } else {
+                            // Password salah
+                            $login_err = "Email atau password salah.";
+                        }
+                    }
+                } else {
+                    // Email tidak ditemukan
+                    $login_err = "Email atau password salah.";
+                }
+            } else {
+                echo "Oops! Terjadi kesalahan. Silakan coba lagi nanti.";
+            }
+            mysqli_stmt_close($stmt);
+        }
+    }
+    mysqli_close($conn);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,7 +138,7 @@
                                         <input type="checkbox" name="remember">Remember Me
                                     </label>
                                     <label>
-                                        <a href="#">Forgotten Password?</a>
+                                        <a href="forget-pass.php">Forgotten Password?</a>
                                     </label>
                                 </div>
                                 <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
@@ -71,7 +152,7 @@
                             <div class="register-link">
                                 <p>
                                     Don't you have account?
-                                    <a href="#">Sign Up Here</a>
+                                    <a href="register.php">Sign Up Here</a>
                                 </p>
                             </div>
                         </div>
