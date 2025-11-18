@@ -1,24 +1,27 @@
 <?php
+// Sertakan konfigurasi database
 include_once '../php/config.php';
 
-// Variabel untuk pesan notifikasi
+// Inisialisasi variabel
 $email = "";
-$email_err = "";
 $message = "";
 $msg_type = ""; // 'success' atau 'danger'
 
+// Logika saat tombol ditekan
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    // 1. Validasi Input
     if (empty(trim($_POST["email"]))) {
-        $email_err = "Silakan masukkan email.";
+        $message = "Silakan masukkan alamat email Anda.";
         $msg_type = "danger";
     } else {
         $email = trim($_POST["email"]);
     }
 
-    if (empty($email_err)) {
-        // Cek apakah email ada di tabel 'users' (sesuaikan nama tabel Anda, sebelumnya 'admin')
-        // Asumsi tabel user Anda bernama 'users' sesuai konteks sebelumnya
-        $sql = "SELECT id FROM users WHERE email = ?"; 
+    // 2. Cek Database
+    if (empty($message)) {
+        // Asumsi nama tabel adalah 'users'
+        $sql = "SELECT id, username FROM users WHERE email = ?";
         
         if ($stmt = mysqli_prepare($conn, $sql)) {
             mysqli_stmt_bind_param($stmt, "s", $param_email);
@@ -27,301 +30,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (mysqli_stmt_execute($stmt)) {
                 mysqli_stmt_store_result($stmt);
 
+                // Jika email ditemukan (jumlah baris == 1)
                 if (mysqli_stmt_num_rows($stmt) == 1) {
-<<<<<<< HEAD
-                    // Email ada, buat token
-                    $token = bin2hex(random_bytes(50));
-                    $expires = date("Y-m-d H:i:s", strtotime('+1 hour'));
-
-                    // Simpan token ke database
-                    $sql_update = "UPDATE admin SET reset_token = ?, reset_token_expires = ? WHERE email = ?";
-                    if ($stmt_update = mysqli_prepare($conn, $sql_update)) {
-                        mysqli_stmt_bind_param($stmt_update, "sss", $token, $expires, $email);
-                        mysqli_stmt_execute($stmt_update);
-                        mysqli_stmt_close($stmt_update);
-
-                        // Kirim email (Gunakan PHPMailer)
-                        $mail = new PHPMailer(true);
-                        $reset_link = "http://localhost/folder-proyek-anda/reset-password.php?to
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                      
-                        
-                        ken=" . $token; // SESUAIKAN LINK INI
-
-                        try {
-                            // Pengaturan Server (Gunakan SMTP, contoh: Gmail)
-                            // $mail->isSMTP();
-                            // $mail->Host       = 'smtp.gmail.com';
-                            // $mail->SMTPAuth   = true;
-                            // $mail->Username   = 'emailanda@gmail.com';
-                            // $mail->Password   = 'password-app-gmail-anda';
-                            // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                            // $mail->Port       = 587;
-
-                            // //Penerima
-                            // $mail->setFrom('no-reply@hotelanda.com', 'Admin Hotel');
-                            // $mail->addAddress($email);
-
-                            // //Konten
-                            // $mail->isHTML(true);
-                            // $mail->Subject = 'Reset Password Akun Admin Hotel';
-                            // $mail->Body    = 'Klik link berikut untuk mereset password Anda: <a href="' . $reset_link . '">' . $reset_link . '</a>';
-                            
-                            // $mail->send();
-                            
-                            // --- HAPUS BAGIAN DI BAWAH INI JIKA SUDAH MENGATUR EMAIL ---
-                            // Ini hanya simulasi karena email belum di-setup
-                            echo "<b>SIMULASI (Hapus ini nanti):</b> Link reset Anda adalah: <a href='$reset_link'>$reset_link</a>";
-                            // --- BATAS SIMULASI ---
-
-                            $message = "Jika akun dengan email tersebut ada, link reset password telah dikirim.";
-
-                        } catch (Exception $e) {
-                            $message = "Gagal mengirim email. Mailer Error: {$mail->ErrorInfo}";
-                        }
-                    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     
-=======
-                    // Email ditemukan! (Simulasi Reset)
-                    // Di sistem nyata, di sini Anda generate token & kirim email via PHPMailer
+                    /**
+                     * DI SINI LOGIKA PENGIRIMAN EMAIL (PHPMailer)
+                     * Untuk saat ini kita buat simulasi sukses.
+                     */
                     
-                    // Simulasi Sukses
-                    $message = "Link reset password telah dikirim ke email Anda (Simulasi).";
+                    $message = "Link untuk reset password telah dikirim ke <b>$email</b>. Silakan cek kotak masuk atau folder spam Anda.";
                     $msg_type = "success";
                     
-                    // TODO: Implementasi PHPMailer di sini jika sudah siap
-                    
->>>>>>> d1fc39ca29ddcb084285019d74476b24bac6292e
                 } else {
-                    // Email tidak ditemukan, tapi demi keamanan kita beri pesan umum
-                    $message = "Jika email terdaftar, link reset telah dikirim.";
-                    $msg_type = "success";
+                    // Email tidak terdaftar
+                    // Catatan Keamanan: Sebaiknya pesan tetap generik ("Jika email ada, kami telah mengirim...") 
+                    // tapi untuk admin panel internal, memberitahu email salah tidak apa-apa.
+                    $message = "Email tersebut tidak terdaftar dalam sistem kami.";
+                    $msg_type = "danger";
                 }
             } else {
-                $message = "Terjadi kesalahan sistem. Coba lagi nanti.";
+                $message = "Terjadi kesalahan sistem. Silakan coba lagi nanti.";
                 $msg_type = "danger";
             }
             mysqli_stmt_close($stmt);
         }
-    } else {
-        $message = $email_err;
     }
+    // Tutup koneksi
     mysqli_close($conn);
 }
 ?>
@@ -332,8 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Luxury Hotel Forgot Password">
-    <title>Forgot Password - Luxury Hotel Admin</title>
+    <meta name="description" content="Luxury Hotel Password Recovery">
+    <title>Forgot Password - Luxury Hotel</title>
 
     <link href="css/font-face.css" rel="stylesheet" media="all">
     <link href="vendor/fontawesome-7.0.1/css/all.min.css" rel="stylesheet" media="all">
@@ -349,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         /* Background Hotel Mewah */
         .page-content--bge5 {
-            /* Gambar Background yang sama dengan Login/Register agar konsisten */
+            /* Gambar Background (Sama dengan Login/Register) */
             background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed; 
             background-size: cover;
             position: relative;
@@ -381,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 15px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
             padding: 35px 35px;
-            border-top: 4px solid #002877;
+            border-top: 4px solid #002877; /* Aksen Biru */
         }
 
         /* Header Logo */
@@ -519,7 +253,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="login-content">
                         <div class="login-logo text-center">
                             <a href="login.php">
-                                <img src="../img/logo.png" alt="CoolAdmin">
+                                <img src="images/icon/logo.png" alt="CoolAdmin">
                             </a>
                             <h3>Password Recovery</h3>
                             <p class="text-muted">Enter your email to reset your password</p>
@@ -565,6 +299,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script src="js/vanilla-utils.js"></script>
     <script src="vendor/bootstrap-5.3.8.bundle.min.js"></script>
+    <script src="vendor/perfect-scrollbar/perfect-scrollbar-1.5.6.min.js"></script>
     <script src="js/main-vanilla.js"></script>
 
 </body>
