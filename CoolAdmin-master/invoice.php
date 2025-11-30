@@ -147,7 +147,7 @@ if (isset($_GET['id'])) {
                             
                             <td>
                                 Invoice #: <strong><?php echo $data['payment_id']; ?></strong><br>
-                                Tanggal: <?php echo date("d F Y", strtotime($data['tanggal_pembayaran'])); ?><br>
+                                Tanggal: <?php echo date("d F Y", strtotime($data['tanggal_pembayaran'] ?? 'now')); ?><br>
                             </td>
                         </tr>
                     </table>
@@ -166,9 +166,9 @@ if (isset($_GET['id'])) {
                             
                             <td>
                                 <strong>Ditagihkan Kepada:</strong><br>
-                                <?php echo htmlspecialchars($data['nama_lengkap']); ?><br>
-                                <?php echo htmlspecialchars($data['email']); ?><br>
-                                <?php echo htmlspecialchars($data['no_telepon']); ?> 
+                                <?php echo htmlspecialchars($data['nama_lengkap'] ?? ''); ?><br>
+                                <?php echo htmlspecialchars($data['email'] ?? ''); ?><br>
+                                <?php echo htmlspecialchars($data['no_telepon'] ?? ''); ?> 
                             </td>
                         </tr>
                     </table>
@@ -181,10 +181,10 @@ if (isset($_GET['id'])) {
             </tr>
             
             <tr class="details">
-                <td><?php echo htmlspecialchars($data['metode_pembayaran']); ?></td>
+                <td><?php echo htmlspecialchars($data['metode_pembayaran'] ?? '-'); ?></td>
                 <td>
                     <?php 
-                        $status = $data['status_pembayaran'];
+                        $status = $data['status_pembayaran'] ?? '';
                         if($status == 'Paid' || $status == 'Lunas') {
                             echo '<span class="status-paid">LUNAS</span>';
                         } else {
@@ -201,18 +201,18 @@ if (isset($_GET['id'])) {
             
             <tr class="item">
                 <td>
-                    Pembayaran Reservasi <?php echo ucfirst($data['jenis_reservasi']); ?> <br>
-                    <small style="color: #777;">Ref ID: <?php echo $data['id_reservasi_ref']; ?></small>
+                    Pembayaran Reservasi <?php echo ucfirst($data['jenis_reservasi'] ?? ''); ?> <br>
+                    <small style="color: #777;">Ref ID: <?php echo $data['id_reservasi_ref'] ?? '-'; ?></small>
                 </td>
                 <td>
-                    Rp <?php echo number_format($data['total_amount'], 0, ',', '.'); ?>
+                    Rp <?php echo number_format($data['total_amount'] ?? 0, 0, ',', '.'); ?>
                 </td>
             </tr>
             
             <tr class="total">
                 <td></td>
                 <td>
-                   Total: Rp <?php echo number_format($data['total_amount'], 0, ',', '.'); ?>
+                   Total: Rp <?php echo number_format($data['total_amount'] ?? 0, 0, ',', '.'); ?>
                 </td>
             </tr>
         </table>

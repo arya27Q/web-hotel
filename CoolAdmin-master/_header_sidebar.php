@@ -1,6 +1,5 @@
 <?php
 // 1. Deteksi Nama File Halaman Saat Ini
-// Fungsi basename($_SERVER['PHP_SELF']) akan mengambil nama file (misal: index.php, tabel_daftar_kamar.php)
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
@@ -41,6 +40,17 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <a href="tabel_pesan.php"><i class="fas fa-envelope"></i>Pesan Masuk</a>
                 </li>
                 
+                <?php 
+                // PERBAIKAN 1: Logika OR agar bisa membaca 'Super Admin' (Mobile)
+                if (isset($_SESSION['role']) && ($_SESSION['role'] == 'super_admin' || $_SESSION['role'] == 'Super Admin')) : 
+                ?>
+                <li class="<?php echo ($current_page == 'data_admin.php') ? 'active' : ''; ?>">
+                    <a href="data_admin.php">
+                        <i class="fas fa-users"></i>Data Admin
+                    </a>
+                </li>
+                <?php endif; ?>
+
                 <li class="has-sub <?php echo (in_array($current_page, ['login.php', 'register.php', 'forget-pass.php'])) ? 'active' : ''; ?>">
                     <a class="js-arrow" href="#"><i class="fas fa-copy"></i>Pages</a>
                     <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
@@ -53,6 +63,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </nav>
 </header>
+
 <aside class="menu-sidebar d-none d-lg-block">
     <div class="logo">
         <a href="index.php">
@@ -86,6 +97,17 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <li class="<?php echo ($current_page == 'tabel_pesan.php') ? 'active' : ''; ?>">
                     <a href="tabel_pesan.php"><i class="fas fa-envelope"></i>Pesan Masuk</a>
                 </li>
+
+                <?php 
+                // PERBAIKAN 2: Logika OR ditambahkan di sini (Desktop Sidebar)
+                if (isset($_SESSION['role']) && ($_SESSION['role'] == 'super_admin' || $_SESSION['role'] == 'Super Admin')) : 
+                ?>
+                <li class="<?php echo ($current_page == 'data_admin.php') ? 'active' : ''; ?>">
+                    <a href="data_admin.php">
+                        <i class="fas fa-users"></i>Data Admin
+                    </a>
+                </li>
+                <?php endif; ?>
 
                 <li class="has-sub <?php echo (in_array($current_page, ['login.php', 'register.php', 'forget-pass.php'])) ? 'active' : ''; ?>">
                     <a class="js-arrow" href="#">

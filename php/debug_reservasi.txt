@@ -4,24 +4,15 @@ Array
         (
             [0] => Array
                 (
-                    [name] => Standard Room
-                    [price] => 250000
-                    [checkin] => 2025-11-18
-                    [checkout] => 2025-11-27
-                    [jumlah_tamu] => 1
-                )
-
-            [1] => Array
-                (
-                    [name] => Standard Room
-                    [price] => 250000
-                    [checkin] => 2025-11-18
-                    [checkout] => 2025-11-27
+                    [name] => Suite Room
+                    [price] => 750000
+                    [checkin] => 2025-11-20
+                    [checkout] => 2025-11-21
                     [jumlah_tamu] => 1
                 )
 
         )
 
-    [total] => 4500000
-    [promo_code] => VIPMEMBER
+    [total] => 750000
+    [promo_code] => 
 )

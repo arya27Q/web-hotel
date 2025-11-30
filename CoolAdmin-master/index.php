@@ -21,11 +21,9 @@ if (isset($_SESSION['user_id'])) {
         $current_user_email = $user_db_data['email'];
         
         if (!empty($user_db_data['profile_img'])) {
-            // Jika ada profile_img dari DB (misal: 'uploads/profiles/xyz.jpg'), 
-            // kita tambahkan '../' untuk keluar dari CoolAdmin-master/
+            
             $current_user_img_src = '../' . $user_db_data['profile_img'];
         } else {
-            // Jika kolom di DB kosong, gunakan default path internal
             $current_user_img_src = $default_img_path;
         }
     }
@@ -153,24 +151,16 @@ if ($hasil_popularitas_meeting) {
                     <li class="active">
                         <a href="index.php"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
                     </li>
-                    <li>
-                        <a href="tabel_daftar_kamar.php"><i class="fas fa-bed"></i>Master Kamar</a>
-                    </li>
-                    <li>
-                        <a href="table.php"><i class="fas fa-table"></i>Reservasi Kamar</a>
-                    </li>
-                    <li>
-                        <a href="tabel_meeting.php"><i class="fas fa-desktop"></i>Reservasi Meeting</a>
-                    </li>
-                    <li>
-                        <a href="tabel_pembayaran.php"><i class="fas fa-credit-card"></i>Pembayaran</a>
-                    </li>
+                  
                     <li class="has-sub">
                         <a class="js-arrow" href="#"><i class="fas fa-copy"></i>Pages</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li><a href="login.php">Login</a></li>
                             <li><a href="register.php">Register</a></li>
                             <li><a href="forget-pass.php">Forget Password</a></li>
+                            <li><a href="data_admin.php"><i class="fas fa-credit-card"></i>data admin</a>
+                    </li>
+
                         </ul>
                     </li>
                 </ul>
@@ -187,8 +177,7 @@ if ($hasil_popularitas_meeting) {
                         <div class="col-md-12">
                             <div class="overview-wrap">
                                 <h2 class="title-1">Overview</h2>
-                                <button class="au-btn au-btn-icon au-btn--blue">
-                                    <i class="zmdi zmdi-plus"></i>add item</button>
+        
                             </div>
                         </div>
                     </div>

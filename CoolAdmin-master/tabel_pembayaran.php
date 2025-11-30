@@ -2,7 +2,7 @@
 include '../php/session_check.php';
 include_once '../php/config.php';
 
-// (BARU) Atur koneksi untuk membaca data sebagai UTF-8
+// Atur koneksi untuk membaca data sebagai UTF-8
 mysqli_set_charset($conn, "utf8"); 
 
 // Cek notifikasi update
@@ -10,7 +10,7 @@ if (isset($_GET['update']) && $_GET['update'] == 'success') {
     echo '<div class="alert alert-success" role="alert" style="margin-bottom:0;">Status pembayaran berhasil diperbarui!</div>';
 }
 
-// Query SQL (Ini sudah benar)
+// Query SQL
 $sql = "SELECT
             p.payment_id, p.jenis_reservasi, p.id_reservasi_ref, p.tanggal_pembayaran,
             p.metode_pembayaran, p.total_amount, p.status_pembayaran, t.nama_lengkap
@@ -36,6 +36,11 @@ if (!$result) {
     <link href="vendor/bootstrap-5.3.8.min.css" rel="stylesheet" media="all">
     <link href="vendor/perfect-scrollbar/perfect-scrollbar-1.5.6.css" rel="stylesheet" media="all">
     <link href="css/theme.css" rel="stylesheet" media="all">
+    
+    <style>
+        .action-btn { border: none; background: none; cursor: pointer; }
+        .form-inline-action { display: flex; align-items: center; gap: 5px; }
+    </style>
 </head>
 <body>
 <div class="page-wrapper">
@@ -70,21 +75,22 @@ if (!$result) {
                                     <tbody>
                                         <?php
                                         if ($result && mysqli_num_rows($result) > 0) {
-                                           
+                                            
                                             $statuses = ['Pending', 'Paid', 'Failed', 'Refunded']; 
 
                                             while ($row = mysqli_fetch_assoc($result)) {
                                                 echo "<tr>";
-                                                echo "<td>" . htmlspecialchars($row['payment_id']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($row['nama_lengkap']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($row['jenis_reservasi']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($row['id_reservasi_ref']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($row['tanggal_pembayaran']) . "</td>";
-                                                echo "<td>" . htmlspecialchars($row['metode_pembayaran']) . "</td>";
-                                                echo "<td>" . number_format($row['total_amount']) . "</td>";
+                                                // PERBAIKAN: Menggunakan ?? '' untuk menangani NULL
+                                                echo "<td>" . htmlspecialchars($row['payment_id'] ?? '') . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['nama_lengkap'] ?? '') . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['jenis_reservasi'] ?? '') . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['id_reservasi_ref'] ?? '') . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['tanggal_pembayaran'] ?? '') . "</td>";
+                                                echo "<td>" . htmlspecialchars($row['metode_pembayaran'] ?? '') . "</td>";
+                                                echo "<td>" . number_format($row['total_amount'] ?? 0) . "</td>";
                                                 
-                                                
-                                                $status_pembayaran = htmlspecialchars($row['status_pembayaran']);
+                                                // Logic Status Badge
+                                                $status_pembayaran = htmlspecialchars($row['status_pembayaran'] ?? '');
                                                 $badge_class = '';
                                                 
                                                 if ($status_pembayaran == 'Paid' || $status_pembayaran == 'Lunas') {
@@ -100,41 +106,36 @@ if (!$result) {
                                                 }
                                                 
                                                 echo "<td><span class='badge-status {$badge_class}'>{$status_pembayaran}</span></td>";
-                                               
-
-                                                echo "<form method='POST' action='update_status_pembayaran.php'>";
-                                                echo "<input type='hidden' name='payment_id' value='" . $row['payment_id'] . "'>";
                                                 
+                                                // KOLOM UPDATE STATUS
+                                                // Saya gabungkan Select dan Tombol Simpan dalam satu Form agar berfungsi
                                                 echo "<td>";
+                                                echo "<form method='POST' action='update_status_pembayaran.php' class='form-inline-action'>";
+                                                echo "<input type='hidden' name='payment_id' value='" . ($row['payment_id'] ?? '') . "'>";
                                                 
-                                                echo "<select name='new_status' class='form-control form-control-sm'>";
+                                                echo "<select name='new_status' class='form-control form-control-sm' style='width: 110px;'>";
                                                 foreach ($statuses as $status) {
-                                                    $selected = ($status == $row['status_pembayaran']) ? 'selected' : '';
+                                                    $selected = ($status == $status_pembayaran) ? 'selected' : '';
                                                     echo "<option value='{$status}' {$selected}>{$status}</option>";
                                                 }
                                                 echo "</select>";
+                                                
+                                                echo "<button type='submit' class='action-btn' data-toggle='tooltip' title='Simpan Perubahan'>";
+                                                echo "<i class='zmdi zmdi-refresh-sync' style='color: orange; font-size: 22px;'></i>"; 
+                                                echo "</button>";
+                                                echo "</form>";
                                                 echo "</td>";
 
+                                                // KOLOM AKSI (Cetak Invoice)
                                                 echo "<td class='text-center'>";
-echo "<div class='table-data-feature' style='display:flex; justify-content:center; gap:5px;'>"; // Container agar tombol sejajar
+                                                echo "<div class='table-data-feature' style='justify-content:center;'>";
+                                                
+                                                echo "<a href='invoice.php?id=" . ($row['payment_id'] ?? '') . "' target='_blank' class='item' data-toggle='tooltip' title='Cetak Invoice'>";
+                                                echo "<i class='zmdi zmdi-print' style='color: #002877; font-size: 20px;'></i>";
+                                                echo "</a>";
 
-    // 1. Form Update Status (Yang Lama)
-    echo "<form method='POST' action='update_status_pembayaran.php' style='margin:0;'>";
-    echo "<input type='hidden' name='payment_id' value='" . $row['payment_id'] . "'>";
-    // ... (kode select dropdown) ... (Anda mungkin perlu menyesuaikan posisi dropdown agar rapi)
-    // Tombol Update (disederhanakan agar muat)
-    echo "<button type='submit' class='item' data-toggle='tooltip' data-placement='top' title='Update Status' style='background:none; border:none;'>";
-    echo "<i class='zmdi zmdi-refresh-sync' style='color: orange; font-size: 20px;'></i>"; 
-    echo "</button>";
-    echo "</form>";
-
-    // 2. Tombol Print Invoice (YANG BARU)
-    echo "<a href='invoice.php?id=" . $row['payment_id'] . "' target='_blank' class='item' data-toggle='tooltip' data-placement='top' title='Cetak Invoice'>";
-    echo "<i class='zmdi zmdi-print' style='color: #002877; font-size: 20px;'></i>";
-    echo "</a>";
-
-echo "</div>";
-echo "</td>";
+                                                echo "</div>";
+                                                echo "</td>";
 
                                                 echo "</tr>";
                                             }
@@ -144,7 +145,7 @@ echo "</td>";
                                         mysqli_close($conn);
                                         ?>
                                     </tbody>
-                                    </table>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -158,8 +159,8 @@ echo "</td>";
                 </div>
             </div>
         </div>
-        </div>
     </div>
+</div>
 <script src="js/vanilla-utils.js"></script>
 <script src="vendor/bootstrap-5.3.8.bundle.min.js"></script>
 <script src="vendor/perfect-scrollbar/perfect-scrollbar-1.5.6.min.js"></script>

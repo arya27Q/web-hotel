@@ -1,36 +1,44 @@
 <?php
-/**
- * _header_desktop.php
- * Header Desktop Cerdas: Otomatis mengambil data user jika belum ada.
- */
 
-// 1. Inisialisasi Variabel Default
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($conn)) {
+ 
+    if (file_exists('../php/config.php')) {
+        include '../php/config.php';
+    } elseif (file_exists('php/config.php')) {
+        include 'php/config.php';
+    }
+}
+
 $header_default_img = 'images/icon/avatar-default.jpg'; 
 $header_final_src = $header_default_img; 
 
 $header_username = $_SESSION['username'] ?? 'Admin';
-$header_email = 'email@example.com'; // Placeholder default
+$header_email = 'email@example.com'; 
+$header_role = $_SESSION['role'] ?? 'admin'; // Default role
 $raw_img_path = '';
 
-// 2. LOGIKA PINTAR: Cek Sumber Data
-// Apakah data user ($user_data) sudah disediakan oleh halaman induk (seperti edit_profil_admin.php)?
+
 if (isset($user_data) && is_array($user_data)) {
-    // Kasus 1: Data dari edit profil
     $header_username = $user_data['username'];
     $header_email = $user_data['email'];
     $raw_img_path = $user_data['profile_img'];
+    if (isset($user_data['role'])) { $header_role = $user_data['role']; }
+
 
 } elseif (isset($current_user_img)) {
-    // Kasus 2: Data dari index.php lama (jika masih pakai cara lama)
     $raw_img_path = $current_user_img;
     if (isset($current_user_email)) { $header_email = $current_user_email; }
 
+
 } elseif (isset($_SESSION['user_id']) && isset($conn)) {
-    // Kasus 3 (PENTING): Halaman Tabel/Lainnya yang belum punya data user.
-    // Kita ambil langsung dari database DI SINI agar otomatis muncul di semua halaman.
-    
     $uid_temp = $_SESSION['user_id'];
-    $stmt_header = $conn->prepare("SELECT username, email, profile_img FROM users WHERE id = ?");
+    
+   
+    $stmt_header = $conn->prepare("SELECT username, email, profile_img, role FROM users WHERE id = ?");
     $stmt_header->bind_param("i", $uid_temp);
     $stmt_header->execute();
     $res_header = $stmt_header->get_result();
@@ -39,65 +47,29 @@ if (isset($user_data) && is_array($user_data)) {
         $u_header = $res_header->fetch_assoc();
         $header_username = $u_header['username'];
         $header_email = $u_header['email'];
+        $header_role = $u_header['role']; // Ambil role dari DB
         $raw_img_path = $u_header['profile_img'];
     }
     $stmt_header->close();
 }
 
-// 3. Proses Jalur Gambar (Path Correction)
+// 4. Proses Jalur Gambar (Path Correction)
 if (!empty($raw_img_path) && $raw_img_path !== $header_default_img) {
-    // Bersihkan '../' berlebih jika ada
     $clean_path = str_replace('../', '', $raw_img_path);
 
-    // Cek apakah gambar ada di folder uploads (artinya di luar folder CoolAdmin-master)
+    // Jika gambar ada di folder uploads, tambahkan ../ agar bisa diakses dari folder CoolAdmin
     if (strpos($clean_path, 'uploads/') !== false) {
-        // Tambahkan '../' agar bisa naik satu level ke root folder
         $header_final_src = '../' . $clean_path; 
     } else {
-        // Gambar internal template
         $header_final_src = $clean_path;
     }
 }
+
+// Format Tampilan Role (Huruf Besar Awal & Ganti Underscore)
+$display_role = ucwords(str_replace('_', ' ', $header_role));
 ?>
 
-<style>
-    /* Foto Kecil di Navbar */
-    .account-item > .image {
-        border-radius: 50%;
-        overflow: hidden; /* Memotong gambar yang keluar dari lingkaran */
-        width: 45px;      /* Ukuran fix */
-        height: 45px;     /* Ukuran fix */
-    }
-    
-    .account-item > .image > img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Agar gambar proporsional */
-        border-radius: 50%;
-    }
-
-    /* Foto Besar di Dropdown */
-    .account-dropdown .info .image {
-        border-radius: 50%;
-        overflow: hidden;
-        width: 65px;  /* Ukuran fix dropdown */
-        height: 65px; /* Ukuran fix dropdown */
-    }
-
-    .account-dropdown .info .image a {
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    .account-dropdown .info .image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Agar gambar proporsional */
-        border-radius: 50%;
-    }
-</style>
-
+   <link href="css/theme.css" rel="stylesheet" media="all">
 <header class="header-desktop">
     <div class="section__content section__content--p30">
         <div class="container-fluid">
@@ -110,7 +82,8 @@ if (!empty($raw_img_path) && $raw_img_path !== $header_default_img) {
                 </form>
                 
                 <div class="header-button">
-                    <div class="noti-wrap"></div>
+                    <div class="noti-wrap">
+                        </div>
                     
                     <div class="account-wrap">
                         <div class="account-item clearfix js-item-menu">
@@ -135,6 +108,14 @@ if (!empty($raw_img_path) && $raw_img_path !== $header_default_img) {
                                             <a href="edit_profil_admin.php"><?php echo htmlspecialchars($header_username); ?></a>
                                         </h5>
                                         <span class="email"><?php echo htmlspecialchars($header_email); ?></span>
+                                        
+                                        <div>
+                                            <?php if($header_role == 'super_admin' || $header_role == 'Super Admin'): ?>
+                                                <span class="role-badge badge-super"><i class="fas fa-crown"></i> <?php echo $display_role; ?></span>
+                                            <?php else: ?>
+                                                <span class="role-badge badge-admin"><?php echo $display_role; ?></span>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
                                 </div>
                                 

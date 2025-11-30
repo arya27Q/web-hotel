@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include '../php/config.php';
 
 if (isset($_POST['register_submit'])) {
     $username = $_POST['username'];

@@ -25,13 +25,13 @@ if (isset($_POST['kirim_balasan'])) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com'; // Host Gmail
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'owencita32@gmail.com'; // GANTI DENGAN EMAIL ADMIN
-        $mail->Password   = 'uxec fctn ulex tneq';   // GANTI DENGAN APP PASSWORD (BUKAN PASSWORD LOGIN BIASA)
+        $mail->Username   = 'ayrandrapratama@gmail.com'; // GANTI DENGAN EMAIL ADMIN
+        $mail->Password   = 'sjjt ccdb uwnh tzae';   // GANTI DENGAN APP PASSWORD (BUKAN PASSWORD LOGIN BIASA)
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
         // Pengirim & Penerima
-        $mail->setFrom('email_admin_anda@gmail.com', 'Admin Luxury Hotel');
+        $mail->setFrom('ayrandrapratama@gmail.com', 'Admin Luxury Hotel');
         $mail->addAddress($email_penerima, $nama_penerima);
 
         // Konten Email
